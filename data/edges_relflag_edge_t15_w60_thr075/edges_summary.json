@@ -1,0 +1,243 @@
+{
+  "n_nodes": 26701,
+  "total_directed_edges": 15304,
+  "total_undirected_edges": 7652,
+  "edge_index_shape": [
+    2,
+    15304
+  ],
+  "edge_type_shape": [
+    15304
+  ],
+  "relation_stats": {
+    "0": {
+      "relation": "R-U-R",
+      "directed_edges": 11038,
+      "undirected_edges": 5519,
+      "mean_degree": 0.8267855136511741,
+      "isolated_nodes": 20257
+    },
+    "1": {
+      "relation": "disabled_relation_1",
+      "directed_edges": 0,
+      "undirected_edges": 0,
+      "mean_degree": 0.0,
+      "isolated_nodes": 26701
+    },
+    "2": {
+      "relation": "weak_product_rating_shock_edge",
+      "directed_edges": 4266,
+      "undirected_edges": 2133,
+      "mean_degree": 0.31953859406014756,
+      "isolated_nodes": 26312
+    }
+  },
+  "relation1_mode": "none",
+  "custom2_edge_mode": "weak_product_shock",
+  "rur_temporal": false,
+  "rur_temporal_mode": "recent",
+  "use_sampled_context_edges": false,
+  "sampled_context_edge_plan": {},
+  "cold_start_max_prior_user_reviews": 1,
+  "cold_start_date_window_days": 30,
+  "cold_start_topk": 5,
+  "cold_start_exclude_neutral": false,
+  "cold_start_allow_same_product_week": false,
+  "cold_start_candidate_count": 0,
+  "cold_start_candidate_share": 0.0,
+  "cold_start_edges_directed": 0,
+  "cold_start_edges_undirected": 0,
+  "cold_start_edges_by_rating_direction": {
+    "-1": 0,
+    "0": 0,
+    "1": 0
+  },
+  "cold_start_filtered_same_user_pairs": 0,
+  "cold_start_filtered_same_product_week_pairs": 0,
+  "shock_max_prior_product_reviews": 30,
+  "shock_min_abs_rating_dev": 0.75,
+  "shock_score_mode": "standardized",
+  "shock_date_window_days": 60,
+  "shock_topk": 15,
+  "shock_exclude_neutral": true,
+  "shock_allow_same_product_week": false,
+  "shock_same_product_only": false,
+  "shock_min_behavior_shift_score": 0.0,
+  "shock_behavior_score_column": "abuse_burst_behavior_score_4w",
+  "shock_behavior_score_available": true,
+  "shock_candidate_behavior_score_quantiles": {
+    "0.0": 0.47000363,
+    "0.25": 1.4853914,
+    "0.5": 2.0424128,
+    "0.75": 2.9569569,
+    "0.9": 3.7874336,
+    "1.0": 4.569955
+  },
+  "shock_candidate_count": 427,
+  "shock_candidate_share": 0.01599191041534025,
+  "shock_edges_directed": 4266,
+  "shock_edges_undirected": 2133,
+  "shock_edges_by_rating_direction": {
+    "-1": 1722,
+    "0": 0,
+    "1": 2544
+  },
+  "shock_edges_by_shock_direction": {
+    "negative_shock": 1780,
+    "neutral_shock": 0,
+    "positive_shock": 2486
+  },
+  "shock_filtered_same_user_pairs": 0,
+  "shock_filtered_same_product_week_pairs": 1406,
+  "overall_mean_degree": 1.1463241077113218,
+  "overall_isolated_nodes": 19916,
+  "duplicate_pairs_removed_across_relations": 0,
+  "cross_relation_duplicate_policy": "When the same directed sampled-node pair appears in multiple relations, keep the highest-priority relation: 2 custom edge > 1 relation > 0 R-U-R.",
+  "parameters": {
+    "max_neighbors_per_node": 5,
+    "burst_min_group_size": 3,
+    "use_sampled_context_edges": false,
+    "relation1_mode": "none",
+    "product_context_topk": 3,
+    "product_context_exclude_same_week": false,
+    "rur_temporal": false,
+    "rur_temporal_mode": "recent",
+    "custom2_edge_mode": "weak_product_shock",
+    "shock_edge_style": "peer",
+    "text_edge_mode": "exact",
+    "text_threshold": 0.9,
+    "text_topk": 3,
+    "text_candidate_policy": "both_risky",
+    "text_exclude_neutral": false,
+    "allow_same_product_week": false,
+    "text_search_multiplier": 10,
+    "cold_start_max_prior_user_reviews": 1,
+    "cold_start_date_window_days": 30,
+    "cold_start_topk": 5,
+    "cold_start_exclude_neutral": false,
+    "cold_start_allow_same_product_week": false,
+    "shock_max_prior_product_reviews": 30,
+    "shock_min_abs_rating_dev": 0.75,
+    "shock_score_mode": "standardized",
+    "shock_date_window_days": 60,
+    "shock_topk": 15,
+    "shock_exclude_neutral": true,
+    "shock_allow_same_product_week": false,
+    "shock_same_product_only": false,
+    "shock_min_behavior_shift_score": 0.0,
+    "shock_baseline_topk": 5,
+    "shock_baseline_exclude_same_week": false,
+    "shock_baseline_temporal_mode": "recent"
+  },
+  "product_prior_context_relation": {
+    "relation1_mode": "none",
+    "product_context_topk": 3,
+    "product_context_exclude_same_week": false,
+    "product_context_edges_directed": 0
+  },
+  "text_relation": {
+    "text_edge_mode": "exact",
+    "text_threshold": 0.9,
+    "text_topk": 3,
+    "text_candidate_policy": "both_risky",
+    "text_exclude_neutral": false,
+    "allow_same_product_week": false,
+    "risky_candidate_count": 14039,
+    "risky_candidate_share": 0.525785551102955,
+    "text_edges_directed": 4266,
+    "text_edges_undirected": 2133,
+    "text_edges_by_rating_direction": {
+      "-1": 0,
+      "0": 0,
+      "1": 0
+    },
+    "filtered_same_product_week_pairs": 0,
+    "avg_text_similarity_of_edges": null,
+    "min_text_similarity_of_edges": null,
+    "max_text_similarity_of_edges": null
+  },
+  "cold_start_relation": {
+    "custom2_edge_mode": "weak_product_shock",
+    "cold_start_max_prior_user_reviews": 1,
+    "cold_start_date_window_days": 30,
+    "cold_start_topk": 5,
+    "cold_start_exclude_neutral": false,
+    "cold_start_allow_same_product_week": false,
+    "cold_start_candidate_count": 0,
+    "cold_start_candidate_share": 0.0,
+    "cold_start_edges_directed": 0,
+    "cold_start_edges_undirected": 0,
+    "cold_start_edges_by_rating_direction": {
+      "-1": 0,
+      "0": 0,
+      "1": 0
+    },
+    "cold_start_filtered_same_user_pairs": 0,
+    "cold_start_filtered_same_product_week_pairs": 0,
+    "cold_start_behavior_columns": []
+  },
+  "weak_product_shock_relation": {
+    "custom2_edge_mode": "weak_product_shock",
+    "shock_edge_style": "peer",
+    "shock_max_prior_product_reviews": 30,
+    "shock_min_abs_rating_dev": 0.75,
+    "shock_score_mode": "standardized",
+    "shock_date_window_days": 60,
+    "shock_topk": 15,
+    "shock_exclude_neutral": true,
+    "shock_allow_same_product_week": false,
+    "shock_same_product_only": false,
+    "shock_min_behavior_shift_score": 0.0,
+    "shock_baseline_topk": 5,
+    "shock_baseline_exclude_same_week": false,
+    "shock_baseline_temporal_mode": "recent",
+    "shock_behavior_score_column": "abuse_burst_behavior_score_4w",
+    "shock_behavior_score_available": true,
+    "shock_candidate_behavior_score_quantiles": {
+      "0.0": 0.47000363,
+      "0.25": 1.4853914,
+      "0.5": 2.0424128,
+      "0.75": 2.9569569,
+      "0.9": 3.7874336,
+      "1.0": 4.569955
+    },
+    "shock_candidate_count": 427,
+    "shock_candidate_share": 0.01599191041534025,
+    "shock_edges_directed": 4266,
+    "shock_edges_undirected": 2133,
+    "shock_edges_by_rating_direction": {
+      "-1": 1722,
+      "0": 0,
+      "1": 2544
+    },
+    "shock_edges_by_shock_direction": {
+      "negative_shock": 1780,
+      "neutral_shock": 0,
+      "positive_shock": 2486
+    },
+    "shock_filtered_same_user_pairs": 0,
+    "shock_filtered_same_product_week_pairs": 1406
+  },
+  "inputs": {
+    "sampled_nodes": "data/sampled_relative_flags_q75_m2/sampled_review_nodes.csv.gz",
+    "sampled_relation_keys": "data/sampled_relative_flags_q75_m2/sampled_relation_candidate_keys.csv.gz",
+    "text_embeddings": "data/embeddings_relative_flags_q75_m2/sampled_text_tfidf_svd.npy"
+  },
+  "outputs": {
+    "edge_index": "data/edges_relflag_edge_t15_w60_thr075/edge_index.npy",
+    "edge_type": "data/edges_relflag_edge_t15_w60_thr075/edge_type.npy",
+    "relation_edge_counts": "data/edges_relflag_edge_t15_w60_thr075/relation_edge_counts.csv",
+    "edges_csv_gz": "data/edges_relflag_edge_t15_w60_thr075/edges.csv.gz",
+    "edges_parquet": null,
+    "summary": "data/edges_relflag_edge_t15_w60_thr075/edges_summary.json"
+  },
+  "notes": [
+    "Only sampled artifacts are used.",
+    "All edges use sampled_node_idx.",
+    "Self-loops are removed.",
+    "R-U-R, product context, and baseline shock edges may be directed when temporal options are enabled.",
+    "Duplicate directed edges are removed within each relation.",
+    "is_fake, label and tag are not used as edge construction criteria."
+  ],
+  "parquet_error": "Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.\nA suitable version of pyarrow or fastparquet is required for parquet support.\nTrying to import the above resulted in these errors:\n - `Import pyarrow` failed. pyarrow is required for parquet support. Use pip or conda to install the pyarrow package.\n - `Import fastparquet` failed. fastparquet is required for parquet support. Use pip or conda to install the fastparquet package."
+}

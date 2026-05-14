@@ -1,0 +1,2384 @@
+{
+  "basic_quality": {
+    "rows": 608458,
+    "columns": [
+      "Unnamed: 0",
+      "user_id",
+      "prod_id",
+      "rating",
+      "label",
+      "date",
+      "text",
+      "tag"
+    ],
+    "unique_users": 260239,
+    "unique_products": 5044,
+    "date_min": "2004-10-20",
+    "date_max": "2015-01-10",
+    "date_parse_na": 0,
+    "index_is_0_to_n_minus_1": true
+  },
+  "labels_and_ratings": {
+    "label_counts": {
+      "-1": 80439,
+      "1": 528019
+    },
+    "tag_counts": {
+      "fake": 80439,
+      "real": 528019
+    },
+    "rating_counts": {
+      "1": 35595,
+      "2": 42982,
+      "3": 83117,
+      "4": 217400,
+      "5": 229364
+    },
+    "rating_by_label_counts": {
+      "-1": {
+        "1": 11518,
+        "2": 6242,
+        "3": 6335,
+        "4": 20471,
+        "5": 35873
+      },
+      "1": {
+        "1": 24077,
+        "2": 36740,
+        "3": 76782,
+        "4": 196929,
+        "5": 193491
+      }
+    },
+    "rating_by_label_pct": {
+      "-1": {
+        "1": 14.3189,
+        "2": 7.7599,
+        "3": 7.8755,
+        "4": 25.4491,
+        "5": 44.5965
+      },
+      "1": {
+        "1": 4.5599,
+        "2": 6.9581,
+        "3": 14.5415,
+        "4": 37.2958,
+        "5": 36.6447
+      }
+    },
+    "rating_fake_rate": [
+      {
+        "rating_int": 1,
+        "reviews": 35595,
+        "fake": 11518,
+        "fake_rate": 0.323585
+      },
+      {
+        "rating_int": 2,
+        "reviews": 42982,
+        "fake": 6242,
+        "fake_rate": 0.145224
+      },
+      {
+        "rating_int": 3,
+        "reviews": 83117,
+        "fake": 6335,
+        "fake_rate": 0.076218
+      },
+      {
+        "rating_int": 4,
+        "reviews": 217400,
+        "fake": 20471,
+        "fake_rate": 0.094163
+      },
+      {
+        "rating_int": 5,
+        "reviews": 229364,
+        "fake": 35873,
+        "fake_rate": 0.156402
+      }
+    ]
+  },
+  "time_patterns": {
+    "yearly": [
+      {
+        "year": 2004,
+        "reviews": 3,
+        "fake": 0,
+        "fake_rate": 0.0
+      },
+      {
+        "year": 2005,
+        "reviews": 427,
+        "fake": 42,
+        "fake_rate": 0.098361
+      },
+      {
+        "year": 2006,
+        "reviews": 2252,
+        "fake": 135,
+        "fake_rate": 0.059947
+      },
+      {
+        "year": 2007,
+        "reviews": 7536,
+        "fake": 485,
+        "fake_rate": 0.064358
+      },
+      {
+        "year": 2008,
+        "reviews": 16781,
+        "fake": 1459,
+        "fake_rate": 0.086944
+      },
+      {
+        "year": 2009,
+        "reviews": 31905,
+        "fake": 3761,
+        "fake_rate": 0.117881
+      },
+      {
+        "year": 2010,
+        "reviews": 54566,
+        "fake": 6736,
+        "fake_rate": 0.123447
+      },
+      {
+        "year": 2011,
+        "reviews": 80210,
+        "fake": 11809,
+        "fake_rate": 0.147226
+      },
+      {
+        "year": 2012,
+        "reviews": 97883,
+        "fake": 14301,
+        "fake_rate": 0.146103
+      },
+      {
+        "year": 2013,
+        "reviews": 131214,
+        "fake": 18373,
+        "fake_rate": 0.140023
+      },
+      {
+        "year": 2014,
+        "reviews": 180659,
+        "fake": 22864,
+        "fake_rate": 0.126559
+      },
+      {
+        "year": 2015,
+        "reviews": 5022,
+        "fake": 474,
+        "fake_rate": 0.094385
+      }
+    ],
+    "monthly": [
+      {
+        "month": "2004-10",
+        "reviews": 1,
+        "fake": 0,
+        "fake_rate": 0.0
+      },
+      {
+        "month": "2004-11",
+        "reviews": 1,
+        "fake": 0,
+        "fake_rate": 0.0
+      },
+      {
+        "month": "2004-12",
+        "reviews": 1,
+        "fake": 0,
+        "fake_rate": 0.0
+      },
+      {
+        "month": "2005-02",
+        "reviews": 2,
+        "fake": 0,
+        "fake_rate": 0.0
+      },
+      {
+        "month": "2005-03",
+        "reviews": 9,
+        "fake": 2,
+        "fake_rate": 0.222222
+      },
+      {
+        "month": "2005-04",
+        "reviews": 12,
+        "fake": 0,
+        "fake_rate": 0.0
+      },
+      {
+        "month": "2005-05",
+        "reviews": 22,
+        "fake": 1,
+        "fake_rate": 0.045455
+      },
+      {
+        "month": "2005-06",
+        "reviews": 23,
+        "fake": 0,
+        "fake_rate": 0.0
+      },
+      {
+        "month": "2005-07",
+        "reviews": 21,
+        "fake": 0,
+        "fake_rate": 0.0
+      },
+      {
+        "month": "2005-08",
+        "reviews": 59,
+        "fake": 1,
+        "fake_rate": 0.016949
+      },
+      {
+        "month": "2005-09",
+        "reviews": 42,
+        "fake": 1,
+        "fake_rate": 0.02381
+      },
+      {
+        "month": "2005-10",
+        "reviews": 70,
+        "fake": 3,
+        "fake_rate": 0.042857
+      },
+      {
+        "month": "2005-11",
+        "reviews": 59,
+        "fake": 8,
+        "fake_rate": 0.135593
+      },
+      {
+        "month": "2005-12",
+        "reviews": 108,
+        "fake": 26,
+        "fake_rate": 0.240741
+      },
+      {
+        "month": "2006-01",
+        "reviews": 174,
+        "fake": 23,
+        "fake_rate": 0.132184
+      },
+      {
+        "month": "2006-02",
+        "reviews": 143,
+        "fake": 5,
+        "fake_rate": 0.034965
+      },
+      {
+        "month": "2006-03",
+        "reviews": 151,
+        "fake": 9,
+        "fake_rate": 0.059603
+      },
+      {
+        "month": "2006-04",
+        "reviews": 141,
+        "fake": 11,
+        "fake_rate": 0.078014
+      },
+      {
+        "month": "2006-05",
+        "reviews": 169,
+        "fake": 8,
+        "fake_rate": 0.047337
+      },
+      {
+        "month": "2006-06",
+        "reviews": 127,
+        "fake": 9,
+        "fake_rate": 0.070866
+      },
+      {
+        "month": "2006-07",
+        "reviews": 172,
+        "fake": 8,
+        "fake_rate": 0.046512
+      },
+      {
+        "month": "2006-08",
+        "reviews": 288,
+        "fake": 23,
+        "fake_rate": 0.079861
+      },
+      {
+        "month": "2006-09",
+        "reviews": 206,
+        "fake": 7,
+        "fake_rate": 0.033981
+      },
+      {
+        "month": "2006-10",
+        "reviews": 236,
+        "fake": 8,
+        "fake_rate": 0.033898
+      },
+      {
+        "month": "2006-11",
+        "reviews": 208,
+        "fake": 9,
+        "fake_rate": 0.043269
+      },
+      {
+        "month": "2006-12",
+        "reviews": 237,
+        "fake": 15,
+        "fake_rate": 0.063291
+      },
+      {
+        "month": "2007-01",
+        "reviews": 483,
+        "fake": 49,
+        "fake_rate": 0.101449
+      },
+      {
+        "month": "2007-02",
+        "reviews": 535,
+        "fake": 45,
+        "fake_rate": 0.084112
+      },
+      {
+        "month": "2007-03",
+        "reviews": 465,
+        "fake": 28,
+        "fake_rate": 0.060215
+      },
+      {
+        "month": "2007-04",
+        "reviews": 543,
+        "fake": 24,
+        "fake_rate": 0.044199
+      },
+      {
+        "month": "2007-05",
+        "reviews": 505,
+        "fake": 31,
+        "fake_rate": 0.061386
+      },
+      {
+        "month": "2007-06",
+        "reviews": 589,
+        "fake": 36,
+        "fake_rate": 0.061121
+      },
+      {
+        "month": "2007-07",
+        "reviews": 821,
+        "fake": 46,
+        "fake_rate": 0.056029
+      },
+      {
+        "month": "2007-08",
+        "reviews": 837,
+        "fake": 55,
+        "fake_rate": 0.065711
+      },
+      {
+        "month": "2007-09",
+        "reviews": 700,
+        "fake": 39,
+        "fake_rate": 0.055714
+      },
+      {
+        "month": "2007-10",
+        "reviews": 712,
+        "fake": 46,
+        "fake_rate": 0.064607
+      },
+      {
+        "month": "2007-11",
+        "reviews": 736,
+        "fake": 54,
+        "fake_rate": 0.07337
+      },
+      {
+        "month": "2007-12",
+        "reviews": 610,
+        "fake": 32,
+        "fake_rate": 0.052459
+      },
+      {
+        "month": "2008-01",
+        "reviews": 994,
+        "fake": 60,
+        "fake_rate": 0.060362
+      },
+      {
+        "month": "2008-02",
+        "reviews": 966,
+        "fake": 67,
+        "fake_rate": 0.069358
+      },
+      {
+        "month": "2008-03",
+        "reviews": 1140,
+        "fake": 68,
+        "fake_rate": 0.059649
+      },
+      {
+        "month": "2008-04",
+        "reviews": 1211,
+        "fake": 76,
+        "fake_rate": 0.062758
+      },
+      {
+        "month": "2008-05",
+        "reviews": 1170,
+        "fake": 90,
+        "fake_rate": 0.076923
+      },
+      {
+        "month": "2008-06",
+        "reviews": 1329,
+        "fake": 117,
+        "fake_rate": 0.088036
+      },
+      {
+        "month": "2008-07",
+        "reviews": 1747,
+        "fake": 173,
+        "fake_rate": 0.099027
+      },
+      {
+        "month": "2008-08",
+        "reviews": 1671,
+        "fake": 158,
+        "fake_rate": 0.094554
+      },
+      {
+        "month": "2008-09",
+        "reviews": 1493,
+        "fake": 135,
+        "fake_rate": 0.090422
+      },
+      {
+        "month": "2008-10",
+        "reviews": 1412,
+        "fake": 127,
+        "fake_rate": 0.089943
+      },
+      {
+        "month": "2008-11",
+        "reviews": 1804,
+        "fake": 203,
+        "fake_rate": 0.112528
+      },
+      {
+        "month": "2008-12",
+        "reviews": 1844,
+        "fake": 185,
+        "fake_rate": 0.100325
+      },
+      {
+        "month": "2009-01",
+        "reviews": 2410,
+        "fake": 213,
+        "fake_rate": 0.088382
+      },
+      {
+        "month": "2009-02",
+        "reviews": 2219,
+        "fake": 252,
+        "fake_rate": 0.113565
+      },
+      {
+        "month": "2009-03",
+        "reviews": 2496,
+        "fake": 296,
+        "fake_rate": 0.11859
+      },
+      {
+        "month": "2009-04",
+        "reviews": 2327,
+        "fake": 278,
+        "fake_rate": 0.119467
+      },
+      {
+        "month": "2009-05",
+        "reviews": 2478,
+        "fake": 282,
+        "fake_rate": 0.113801
+      },
+      {
+        "month": "2009-06",
+        "reviews": 2441,
+        "fake": 326,
+        "fake_rate": 0.133552
+      },
+      {
+        "month": "2009-07",
+        "reviews": 2875,
+        "fake": 359,
+        "fake_rate": 0.12487
+      },
+      {
+        "month": "2009-08",
+        "reviews": 3145,
+        "fake": 387,
+        "fake_rate": 0.123052
+      },
+      {
+        "month": "2009-09",
+        "reviews": 2758,
+        "fake": 318,
+        "fake_rate": 0.115301
+      },
+      {
+        "month": "2009-10",
+        "reviews": 2928,
+        "fake": 362,
+        "fake_rate": 0.123634
+      },
+      {
+        "month": "2009-11",
+        "reviews": 3032,
+        "fake": 342,
+        "fake_rate": 0.112797
+      },
+      {
+        "month": "2009-12",
+        "reviews": 2796,
+        "fake": 346,
+        "fake_rate": 0.123748
+      },
+      {
+        "month": "2010-01",
+        "reviews": 4316,
+        "fake": 513,
+        "fake_rate": 0.11886
+      },
+      {
+        "month": "2010-02",
+        "reviews": 4027,
+        "fake": 553,
+        "fake_rate": 0.137323
+      },
+      {
+        "month": "2010-03",
+        "reviews": 4418,
+        "fake": 525,
+        "fake_rate": 0.118832
+      },
+      {
+        "month": "2010-04",
+        "reviews": 4105,
+        "fake": 536,
+        "fake_rate": 0.130572
+      },
+      {
+        "month": "2010-05",
+        "reviews": 4293,
+        "fake": 567,
+        "fake_rate": 0.132075
+      },
+      {
+        "month": "2010-06",
+        "reviews": 4212,
+        "fake": 597,
+        "fake_rate": 0.141738
+      },
+      {
+        "month": "2010-07",
+        "reviews": 4809,
+        "fake": 570,
+        "fake_rate": 0.118528
+      },
+      {
+        "month": "2010-08",
+        "reviews": 5181,
+        "fake": 560,
+        "fake_rate": 0.108087
+      },
+      {
+        "month": "2010-09",
+        "reviews": 4672,
+        "fake": 509,
+        "fake_rate": 0.108947
+      },
+      {
+        "month": "2010-10",
+        "reviews": 4754,
+        "fake": 555,
+        "fake_rate": 0.116744
+      },
+      {
+        "month": "2010-11",
+        "reviews": 5010,
+        "fake": 611,
+        "fake_rate": 0.121956
+      },
+      {
+        "month": "2010-12",
+        "reviews": 4769,
+        "fake": 640,
+        "fake_rate": 0.1342
+      },
+      {
+        "month": "2011-01",
+        "reviews": 6386,
+        "fake": 815,
+        "fake_rate": 0.127623
+      },
+      {
+        "month": "2011-02",
+        "reviews": 5661,
+        "fake": 789,
+        "fake_rate": 0.139375
+      },
+      {
+        "month": "2011-03",
+        "reviews": 6683,
+        "fake": 890,
+        "fake_rate": 0.133174
+      },
+      {
+        "month": "2011-04",
+        "reviews": 6654,
+        "fake": 931,
+        "fake_rate": 0.139916
+      },
+      {
+        "month": "2011-05",
+        "reviews": 6529,
+        "fake": 895,
+        "fake_rate": 0.137081
+      },
+      {
+        "month": "2011-06",
+        "reviews": 6696,
+        "fake": 1045,
+        "fake_rate": 0.156063
+      },
+      {
+        "month": "2011-07",
+        "reviews": 7417,
+        "fake": 1139,
+        "fake_rate": 0.153566
+      },
+      {
+        "month": "2011-08",
+        "reviews": 7316,
+        "fake": 1185,
+        "fake_rate": 0.161974
+      },
+      {
+        "month": "2011-09",
+        "reviews": 6718,
+        "fake": 1011,
+        "fake_rate": 0.150491
+      },
+      {
+        "month": "2011-10",
+        "reviews": 6667,
+        "fake": 1004,
+        "fake_rate": 0.150592
+      },
+      {
+        "month": "2011-11",
+        "reviews": 6808,
+        "fake": 1078,
+        "fake_rate": 0.158343
+      },
+      {
+        "month": "2011-12",
+        "reviews": 6675,
+        "fake": 1027,
+        "fake_rate": 0.153858
+      },
+      {
+        "month": "2012-01",
+        "reviews": 8730,
+        "fake": 1256,
+        "fake_rate": 0.143872
+      },
+      {
+        "month": "2012-02",
+        "reviews": 8182,
+        "fake": 1267,
+        "fake_rate": 0.154852
+      },
+      {
+        "month": "2012-03",
+        "reviews": 8055,
+        "fake": 1204,
+        "fake_rate": 0.149472
+      },
+      {
+        "month": "2012-04",
+        "reviews": 7906,
+        "fake": 1030,
+        "fake_rate": 0.130281
+      },
+      {
+        "month": "2012-05",
+        "reviews": 7739,
+        "fake": 1177,
+        "fake_rate": 0.152087
+      },
+      {
+        "month": "2012-06",
+        "reviews": 7974,
+        "fake": 1156,
+        "fake_rate": 0.144971
+      },
+      {
+        "month": "2012-07",
+        "reviews": 9049,
+        "fake": 1294,
+        "fake_rate": 0.142999
+      },
+      {
+        "month": "2012-08",
+        "reviews": 8891,
+        "fake": 1330,
+        "fake_rate": 0.149589
+      },
+      {
+        "month": "2012-09",
+        "reviews": 8009,
+        "fake": 1197,
+        "fake_rate": 0.149457
+      },
+      {
+        "month": "2012-10",
+        "reviews": 8178,
+        "fake": 1249,
+        "fake_rate": 0.152727
+      },
+      {
+        "month": "2012-11",
+        "reviews": 7149,
+        "fake": 1025,
+        "fake_rate": 0.143377
+      },
+      {
+        "month": "2012-12",
+        "reviews": 8021,
+        "fake": 1116,
+        "fake_rate": 0.139135
+      },
+      {
+        "month": "2013-01",
+        "reviews": 10554,
+        "fake": 1491,
+        "fake_rate": 0.141273
+      },
+      {
+        "month": "2013-02",
+        "reviews": 9168,
+        "fake": 1389,
+        "fake_rate": 0.151505
+      },
+      {
+        "month": "2013-03",
+        "reviews": 10331,
+        "fake": 1575,
+        "fake_rate": 0.152454
+      },
+      {
+        "month": "2013-04",
+        "reviews": 9954,
+        "fake": 1481,
+        "fake_rate": 0.148784
+      },
+      {
+        "month": "2013-05",
+        "reviews": 10289,
+        "fake": 1554,
+        "fake_rate": 0.151035
+      },
+      {
+        "month": "2013-06",
+        "reviews": 10682,
+        "fake": 1543,
+        "fake_rate": 0.144449
+      },
+      {
+        "month": "2013-07",
+        "reviews": 11842,
+        "fake": 1806,
+        "fake_rate": 0.152508
+      },
+      {
+        "month": "2013-08",
+        "reviews": 12649,
+        "fake": 1693,
+        "fake_rate": 0.133845
+      },
+      {
+        "month": "2013-09",
+        "reviews": 11428,
+        "fake": 1442,
+        "fake_rate": 0.126181
+      },
+      {
+        "month": "2013-10",
+        "reviews": 11530,
+        "fake": 1535,
+        "fake_rate": 0.133131
+      },
+      {
+        "month": "2013-11",
+        "reviews": 11342,
+        "fake": 1422,
+        "fake_rate": 0.125375
+      },
+      {
+        "month": "2013-12",
+        "reviews": 11445,
+        "fake": 1442,
+        "fake_rate": 0.125994
+      },
+      {
+        "month": "2014-01",
+        "reviews": 14082,
+        "fake": 1776,
+        "fake_rate": 0.126118
+      },
+      {
+        "month": "2014-02",
+        "reviews": 12584,
+        "fake": 1713,
+        "fake_rate": 0.136125
+      },
+      {
+        "month": "2014-03",
+        "reviews": 14646,
+        "fake": 1839,
+        "fake_rate": 0.125563
+      },
+      {
+        "month": "2014-04",
+        "reviews": 13711,
+        "fake": 1460,
+        "fake_rate": 0.106484
+      },
+      {
+        "month": "2014-05",
+        "reviews": 14115,
+        "fake": 1551,
+        "fake_rate": 0.109883
+      },
+      {
+        "month": "2014-06",
+        "reviews": 14546,
+        "fake": 1739,
+        "fake_rate": 0.119552
+      },
+      {
+        "month": "2014-07",
+        "reviews": 16692,
+        "fake": 1942,
+        "fake_rate": 0.116343
+      },
+      {
+        "month": "2014-08",
+        "reviews": 17856,
+        "fake": 2251,
+        "fake_rate": 0.126064
+      },
+      {
+        "month": "2014-09",
+        "reviews": 15364,
+        "fake": 2122,
+        "fake_rate": 0.138115
+      },
+      {
+        "month": "2014-10",
+        "reviews": 15845,
+        "fake": 2204,
+        "fake_rate": 0.139098
+      },
+      {
+        "month": "2014-11",
+        "reviews": 15263,
+        "fake": 2141,
+        "fake_rate": 0.140274
+      },
+      {
+        "month": "2014-12",
+        "reviews": 15955,
+        "fake": 2126,
+        "fake_rate": 0.13325
+      },
+      {
+        "month": "2015-01",
+        "reviews": 5022,
+        "fake": 474,
+        "fake_rate": 0.094385
+      }
+    ],
+    "high_volume_month_threshold_p90": 12435.6,
+    "top_months": [
+      {
+        "month": "2014-08",
+        "reviews": 17856,
+        "fake": 2251,
+        "fake_rate": 0.126064
+      },
+      {
+        "month": "2014-07",
+        "reviews": 16692,
+        "fake": 1942,
+        "fake_rate": 0.116343
+      },
+      {
+        "month": "2014-12",
+        "reviews": 15955,
+        "fake": 2126,
+        "fake_rate": 0.13325
+      },
+      {
+        "month": "2014-10",
+        "reviews": 15845,
+        "fake": 2204,
+        "fake_rate": 0.139098
+      },
+      {
+        "month": "2014-09",
+        "reviews": 15364,
+        "fake": 2122,
+        "fake_rate": 0.138115
+      },
+      {
+        "month": "2014-11",
+        "reviews": 15263,
+        "fake": 2141,
+        "fake_rate": 0.140274
+      },
+      {
+        "month": "2014-03",
+        "reviews": 14646,
+        "fake": 1839,
+        "fake_rate": 0.125563
+      },
+      {
+        "month": "2014-06",
+        "reviews": 14546,
+        "fake": 1739,
+        "fake_rate": 0.119552
+      },
+      {
+        "month": "2014-05",
+        "reviews": 14115,
+        "fake": 1551,
+        "fake_rate": 0.109883
+      },
+      {
+        "month": "2014-01",
+        "reviews": 14082,
+        "fake": 1776,
+        "fake_rate": 0.126118
+      },
+      {
+        "month": "2014-04",
+        "reviews": 13711,
+        "fake": 1460,
+        "fake_rate": 0.106484
+      },
+      {
+        "month": "2013-08",
+        "reviews": 12649,
+        "fake": 1693,
+        "fake_rate": 0.133845
+      }
+    ],
+    "day_of_week": [
+      {
+        "dow": "Monday",
+        "reviews": 98275,
+        "fake": 12524,
+        "fake_rate": 0.127438
+      },
+      {
+        "dow": "Tuesday",
+        "reviews": 87255,
+        "fake": 11621,
+        "fake_rate": 0.133184
+      },
+      {
+        "dow": "Wednesday",
+        "reviews": 85575,
+        "fake": 11721,
+        "fake_rate": 0.136968
+      },
+      {
+        "dow": "Thursday",
+        "reviews": 78518,
+        "fake": 10950,
+        "fake_rate": 0.139458
+      },
+      {
+        "dow": "Friday",
+        "reviews": 78149,
+        "fake": 10800,
+        "fake_rate": 0.138198
+      },
+      {
+        "dow": "Saturday",
+        "reviews": 82707,
+        "fake": 10933,
+        "fake_rate": 0.13219
+      },
+      {
+        "dow": "Sunday",
+        "reviews": 97979,
+        "fake": 11890,
+        "fake_rate": 0.121353
+      }
+    ]
+  },
+  "temporal_split": {
+    "cut64_date": "2013-10-03",
+    "cut80_date": "2014-05-20",
+    "split_summary": [
+      {
+        "split": "train",
+        "reviews": 389423,
+        "fake": 52852,
+        "fake_rate": 0.135719,
+        "rating_mean": 3.910183,
+        "start": "2004-10-20",
+        "end": "2013-10-03",
+        "share": 0.640016
+      },
+      {
+        "split": "valid",
+        "reviews": 97399,
+        "fake": 11979,
+        "fake_rate": 0.122989,
+        "rating_mean": 3.947895,
+        "start": "2013-10-04",
+        "end": "2014-05-20",
+        "share": 0.160075
+      },
+      {
+        "split": "test",
+        "reviews": 121636,
+        "fake": 15608,
+        "fake_rate": 0.128317,
+        "rating_mean": 3.946973,
+        "start": "2014-05-21",
+        "end": "2015-01-10",
+        "share": 0.199909
+      }
+    ]
+  },
+  "text_features": {
+    "text_summary_by_label": [
+      {
+        "label": -1,
+        "reviews": 80439,
+        "text_missing": 0,
+        "char_mean": 474.179,
+        "char_median": 329.0,
+        "char_p90": 1022.0,
+        "char_p99": 2401.0,
+        "word_mean": 87.1317,
+        "word_median": 60.0,
+        "word_p90": 188.0,
+        "word_p99": 445.62
+      },
+      {
+        "label": 1,
+        "reviews": 528019,
+        "text_missing": 0,
+        "char_mean": 652.7374,
+        "char_median": 485.0,
+        "char_p90": 1369.0,
+        "char_p99": 2868.0,
+        "word_mean": 119.6146,
+        "word_median": 89.0,
+        "word_p90": 251.0,
+        "word_p99": 523.0
+      }
+    ],
+    "char_bin_stats": [
+      {
+        "char_bin": "(-0.001, 50.0]",
+        "reviews": 15543,
+        "fake": 4664,
+        "fake_rate": 0.300071,
+        "avg_rating": 4.194879,
+        "share": 0.025545
+      },
+      {
+        "char_bin": "(50.0, 100.0]",
+        "reviews": 27609,
+        "fake": 6309,
+        "fake_rate": 0.228512,
+        "avg_rating": 4.160817,
+        "share": 0.045375
+      },
+      {
+        "char_bin": "(100.0, 200.0]",
+        "reviews": 75379,
+        "fake": 13716,
+        "fake_rate": 0.18196,
+        "avg_rating": 4.113785,
+        "share": 0.123885
+      },
+      {
+        "char_bin": "(200.0, 500.0]",
+        "reviews": 207269,
+        "fake": 29752,
+        "fake_rate": 0.143543,
+        "avg_rating": 3.987109,
+        "share": 0.340646
+      },
+      {
+        "char_bin": "(500.0, 1000.0]",
+        "reviews": 173043,
+        "fake": 17592,
+        "fake_rate": 0.101663,
+        "avg_rating": 3.844322,
+        "share": 0.284396
+      },
+      {
+        "char_bin": "(1000.0, 2000.0]",
+        "reviews": 89707,
+        "fake": 6915,
+        "fake_rate": 0.077084,
+        "avg_rating": 3.721326,
+        "share": 0.147433
+      },
+      {
+        "char_bin": "(2000.0, 5000.0]",
+        "reviews": 19899,
+        "fake": 1490,
+        "fake_rate": 0.074878,
+        "avg_rating": 3.601035,
+        "share": 0.032704
+      },
+      {
+        "char_bin": "(5000.0, 100000.0]",
+        "reviews": 9,
+        "fake": 1,
+        "fake_rate": 0.111111,
+        "avg_rating": 4.111111,
+        "share": 1.5e-05
+      }
+    ],
+    "word_bin_stats": [
+      {
+        "word_bin": "(-0.001, 10.0]",
+        "reviews": 20291,
+        "fake": 5797,
+        "fake_rate": 0.285693,
+        "avg_rating": 4.196885,
+        "share": 0.033348
+      },
+      {
+        "word_bin": "(10.0, 25.0]",
+        "reviews": 53602,
+        "fake": 10864,
+        "fake_rate": 0.202679,
+        "avg_rating": 4.163054,
+        "share": 0.088095
+      },
+      {
+        "word_bin": "(25.0, 50.0]",
+        "reviews": 104457,
+        "fake": 17640,
+        "fake_rate": 0.168873,
+        "avg_rating": 4.070699,
+        "share": 0.171675
+      },
+      {
+        "word_bin": "(50.0, 100.0]",
+        "reviews": 171392,
+        "fake": 22949,
+        "fake_rate": 0.133898,
+        "avg_rating": 3.957203,
+        "share": 0.281683
+      },
+      {
+        "word_bin": "(100.0, 200.0]",
+        "reviews": 165702,
+        "fake": 16147,
+        "fake_rate": 0.097446,
+        "avg_rating": 3.826327,
+        "share": 0.272331
+      },
+      {
+        "word_bin": "(200.0, 400.0]",
+        "reviews": 78035,
+        "fake": 5875,
+        "fake_rate": 0.075287,
+        "avg_rating": 3.693304,
+        "share": 0.12825
+      },
+      {
+        "word_bin": "(400.0, 800.0]",
+        "reviews": 14079,
+        "fake": 1087,
+        "fake_rate": 0.077207,
+        "avg_rating": 3.559486,
+        "share": 0.023139
+      },
+      {
+        "word_bin": "(800.0, 100000.0]",
+        "reviews": 900,
+        "fake": 80,
+        "fake_rate": 0.088889,
+        "avg_rating": 3.584444,
+        "share": 0.001479
+      }
+    ]
+  },
+  "user_product_concentration": {
+    "product_stats": {
+      "product_review_count_quantiles": {
+        "0.0": 1.0,
+        "0.01": 1.0,
+        "0.05": 1.0,
+        "0.25": 8.0,
+        "0.5": 33.0,
+        "0.75": 108.0,
+        "0.95": 511.7,
+        "0.99": 1275.11,
+        "1.0": 7378.0
+      },
+      "products_with_any_fake": 4336,
+      "products_with_any_fake_share_pct": 85.9635,
+      "products_all_fake": 133,
+      "top_1pct_products_review_share_pct": 18.6815,
+      "top_10pct_products_review_share_pct": 60.348,
+      "top_1pct_products_fake_review_share_pct": 16.1824
+    },
+    "user_stats": {
+      "user_review_count_quantiles": {
+        "0.0": 1.0,
+        "0.01": 1.0,
+        "0.05": 1.0,
+        "0.25": 1.0,
+        "0.5": 1.0,
+        "0.75": 2.0,
+        "0.95": 7.0,
+        "0.99": 21.0,
+        "1.0": 197.0
+      },
+      "users_with_any_fake": 62214,
+      "users_with_any_fake_share_pct": 23.9065,
+      "reviews_by_fake_exposed_users_share_pct": 14.4413,
+      "top_1pct_users_review_share_pct": 15.475,
+      "top_10pct_users_review_share_pct": 45.9141
+    },
+    "product_bins": [
+      {
+        "bin": "(-0.001, 5.0]",
+        "products": 1037,
+        "total_reviews": 2526,
+        "fake_reviews": 595,
+        "product_share": 0.205591,
+        "fake_rate_reviews": 0.23555
+      },
+      {
+        "bin": "(5.0, 10.0]",
+        "products": 477,
+        "total_reviews": 3763,
+        "fake_reviews": 933,
+        "product_share": 0.094568,
+        "fake_rate_reviews": 0.24794
+      },
+      {
+        "bin": "(10.0, 30.0]",
+        "products": 940,
+        "total_reviews": 18069,
+        "fake_reviews": 4413,
+        "product_share": 0.18636,
+        "fake_rate_reviews": 0.24423
+      },
+      {
+        "bin": "(30.0, 100.0]",
+        "products": 1258,
+        "total_reviews": 73934,
+        "fake_reviews": 14669,
+        "product_share": 0.249405,
+        "fake_rate_reviews": 0.198407
+      },
+      {
+        "bin": "(100.0, 300.0]",
+        "products": 835,
+        "total_reviews": 145353,
+        "fake_reviews": 20527,
+        "product_share": 0.165543,
+        "fake_rate_reviews": 0.141222
+      },
+      {
+        "bin": "(300.0, 1000.0]",
+        "products": 413,
+        "total_reviews": 213347,
+        "fake_reviews": 22590,
+        "product_share": 0.081879,
+        "fake_rate_reviews": 0.105884
+      },
+      {
+        "bin": "(1000.0, 100000.0]",
+        "products": 84,
+        "total_reviews": 151466,
+        "fake_reviews": 16712,
+        "product_share": 0.016653,
+        "fake_rate_reviews": 0.110335
+      }
+    ],
+    "user_bins": [
+      {
+        "bin": "(-0.001, 1.0]",
+        "users": 170076,
+        "total_reviews": 170076,
+        "fake_reviews": 50659,
+        "user_share": 0.653538,
+        "fake_rate_reviews": 0.297861
+      },
+      {
+        "bin": "(1.0, 2.0]",
+        "users": 40158,
+        "total_reviews": 80316,
+        "fake_reviews": 12975,
+        "user_share": 0.154312,
+        "fake_rate_reviews": 0.161549
+      },
+      {
+        "bin": "(2.0, 5.0]",
+        "users": 31969,
+        "total_reviews": 116436,
+        "fake_reviews": 10829,
+        "user_share": 0.122845,
+        "fake_rate_reviews": 0.093004
+      },
+      {
+        "bin": "(5.0, 10.0]",
+        "users": 10703,
+        "total_reviews": 79382,
+        "fake_reviews": 3467,
+        "user_share": 0.041128,
+        "fake_rate_reviews": 0.043675
+      },
+      {
+        "bin": "(10.0, 20.0]",
+        "users": 4678,
+        "total_reviews": 66997,
+        "fake_reviews": 1405,
+        "user_share": 0.017976,
+        "fake_rate_reviews": 0.020971
+      },
+      {
+        "bin": "(20.0, 50.0]",
+        "users": 2280,
+        "total_reviews": 68339,
+        "fake_reviews": 1051,
+        "user_share": 0.008761,
+        "fake_rate_reviews": 0.015379
+      },
+      {
+        "bin": "(50.0, 100000.0]",
+        "users": 375,
+        "total_reviews": 26912,
+        "fake_reviews": 53,
+        "user_share": 0.001441,
+        "fake_rate_reviews": 0.001969
+      }
+    ]
+  },
+  "user_recency": {
+    "has_user_neighbor_7d": [
+      {
+        "has_user_neighbor_7d": 0,
+        "reviews": 382776,
+        "fake": 60010,
+        "fake_rate": 0.156776
+      },
+      {
+        "has_user_neighbor_7d": 1,
+        "reviews": 225682,
+        "fake": 20429,
+        "fake_rate": 0.090521
+      }
+    ],
+    "has_user_neighbor_30d": [
+      {
+        "has_user_neighbor_30d": 0,
+        "reviews": 312793,
+        "fake": 56978,
+        "fake_rate": 0.182159
+      },
+      {
+        "has_user_neighbor_30d": 1,
+        "reviews": 295665,
+        "fake": 23461,
+        "fake_rate": 0.07935
+      }
+    ]
+  },
+  "burst_patterns": {
+    "product_day_bucket_count_quantiles": {
+      "0.0": 1.0,
+      "0.01": 1.0,
+      "0.05": 1.0,
+      "0.25": 1.0,
+      "0.5": 1.0,
+      "0.75": 1.0,
+      "0.95": 2.0,
+      "0.99": 4.0,
+      "1.0": 42.0
+    },
+    "product_week_rating_bucket_count_quantiles": {
+      "0.0": 1.0,
+      "0.01": 1.0,
+      "0.05": 1.0,
+      "0.25": 1.0,
+      "0.5": 1.0,
+      "0.75": 2.0,
+      "0.95": 4.0,
+      "0.99": 8.0,
+      "1.0": 78.0
+    },
+    "product_day_review_level_fake_rate_by_bucket_size": [
+      {
+        "bin": "(-0.001, 1.0]",
+        "reviews": 419527,
+        "fake": 56504,
+        "fake_rate": 0.134685
+      },
+      {
+        "bin": "(1.0, 2.0]",
+        "reviews": 120954,
+        "fake": 14486,
+        "fake_rate": 0.119765
+      },
+      {
+        "bin": "(2.0, 5.0]",
+        "reviews": 60014,
+        "fake": 7873,
+        "fake_rate": 0.131186
+      },
+      {
+        "bin": "(5.0, 10.0]",
+        "reviews": 7311,
+        "fake": 1349,
+        "fake_rate": 0.184516
+      },
+      {
+        "bin": "(10.0, 20.0]",
+        "reviews": 561,
+        "fake": 180,
+        "fake_rate": 0.320856
+      },
+      {
+        "bin": "(20.0, 50.0]",
+        "reviews": 91,
+        "fake": 47,
+        "fake_rate": 0.516484
+      },
+      {
+        "bin": "(50.0, 100000.0]",
+        "reviews": 0,
+        "fake": 0,
+        "fake_rate": null
+      }
+    ],
+    "product_week_rating_review_level_fake_rate_by_bucket_size": [
+      {
+        "bin": "(-0.001, 1.0]",
+        "reviews": 254259,
+        "fake": 38016,
+        "fake_rate": 0.149517
+      },
+      {
+        "bin": "(1.0, 2.0]",
+        "reviews": 126424,
+        "fake": 15737,
+        "fake_rate": 0.124478
+      },
+      {
+        "bin": "(2.0, 5.0]",
+        "reviews": 148073,
+        "fake": 16736,
+        "fake_rate": 0.113025
+      },
+      {
+        "bin": "(5.0, 10.0]",
+        "reviews": 55039,
+        "fake": 6217,
+        "fake_rate": 0.112956
+      },
+      {
+        "bin": "(10.0, 20.0]",
+        "reviews": 17753,
+        "fake": 2433,
+        "fake_rate": 0.137047
+      },
+      {
+        "bin": "(20.0, 50.0]",
+        "reviews": 6832,
+        "fake": 1259,
+        "fake_rate": 0.18428
+      },
+      {
+        "bin": "(50.0, 100000.0]",
+        "reviews": 78,
+        "fake": 41,
+        "fake_rate": 0.525641
+      }
+    ],
+    "top_product_week_rating_bursts": [
+      {
+        "prod_id": 2879,
+        "week": "2014-09-08",
+        "rating_bucket": "low_1_2",
+        "bucket_reviews": 78,
+        "bucket_fake": 41,
+        "bucket_fake_rate": 0.525641
+      },
+      {
+        "prod_id": 56,
+        "week": "2014-12-08",
+        "rating_bucket": "high_4_5",
+        "bucket_reviews": 50,
+        "bucket_fake": 35,
+        "bucket_fake_rate": 0.7
+      },
+      {
+        "prod_id": 4698,
+        "week": "2014-06-30",
+        "rating_bucket": "high_4_5",
+        "bucket_reviews": 48,
+        "bucket_fake": 4,
+        "bucket_fake_rate": 0.083333
+      },
+      {
+        "prod_id": 4698,
+        "week": "2014-12-29",
+        "rating_bucket": "high_4_5",
+        "bucket_reviews": 46,
+        "bucket_fake": 15,
+        "bucket_fake_rate": 0.326087
+      },
+      {
+        "prod_id": 4698,
+        "week": "2014-06-09",
+        "rating_bucket": "high_4_5",
+        "bucket_reviews": 44,
+        "bucket_fake": 15,
+        "bucket_fake_rate": 0.340909
+      },
+      {
+        "prod_id": 4698,
+        "week": "2014-09-15",
+        "rating_bucket": "high_4_5",
+        "bucket_reviews": 44,
+        "bucket_fake": 10,
+        "bucket_fake_rate": 0.227273
+      },
+      {
+        "prod_id": 4698,
+        "week": "2014-07-14",
+        "rating_bucket": "high_4_5",
+        "bucket_reviews": 43,
+        "bucket_fake": 4,
+        "bucket_fake_rate": 0.093023
+      },
+      {
+        "prod_id": 56,
+        "week": "2014-12-01",
+        "rating_bucket": "high_4_5",
+        "bucket_reviews": 42,
+        "bucket_fake": 16,
+        "bucket_fake_rate": 0.380952
+      },
+      {
+        "prod_id": 56,
+        "week": "2014-12-29",
+        "rating_bucket": "high_4_5",
+        "bucket_reviews": 41,
+        "bucket_fake": 21,
+        "bucket_fake_rate": 0.512195
+      },
+      {
+        "prod_id": 56,
+        "week": "2014-11-10",
+        "rating_bucket": "high_4_5",
+        "bucket_reviews": 41,
+        "bucket_fake": 20,
+        "bucket_fake_rate": 0.487805
+      },
+      {
+        "prod_id": 4698,
+        "week": "2014-07-28",
+        "rating_bucket": "high_4_5",
+        "bucket_reviews": 41,
+        "bucket_fake": 8,
+        "bucket_fake_rate": 0.195122
+      },
+      {
+        "prod_id": 4698,
+        "week": "2014-06-16",
+        "rating_bucket": "high_4_5",
+        "bucket_reviews": 41,
+        "bucket_fake": 3,
+        "bucket_fake_rate": 0.073171
+      }
+    ],
+    "top_product_week_rating_fake_heavy_min10": [
+      {
+        "prod_id": 3074,
+        "week": "2013-03-11",
+        "rating_bucket": "low_1_2",
+        "bucket_reviews": 15,
+        "bucket_fake": 15,
+        "bucket_fake_rate": 1.0
+      },
+      {
+        "prod_id": 2397,
+        "week": "2014-04-21",
+        "rating_bucket": "high_4_5",
+        "bucket_reviews": 12,
+        "bucket_fake": 12,
+        "bucket_fake_rate": 1.0
+      },
+      {
+        "prod_id": 426,
+        "week": "2012-07-02",
+        "rating_bucket": "high_4_5",
+        "bucket_reviews": 11,
+        "bucket_fake": 11,
+        "bucket_fake_rate": 1.0
+      },
+      {
+        "prod_id": 476,
+        "week": "2012-01-09",
+        "rating_bucket": "low_1_2",
+        "bucket_reviews": 11,
+        "bucket_fake": 11,
+        "bucket_fake_rate": 1.0
+      },
+      {
+        "prod_id": 3392,
+        "week": "2012-09-03",
+        "rating_bucket": "high_4_5",
+        "bucket_reviews": 10,
+        "bucket_fake": 10,
+        "bucket_fake_rate": 1.0
+      },
+      {
+        "prod_id": 2397,
+        "week": "2014-03-03",
+        "rating_bucket": "high_4_5",
+        "bucket_reviews": 19,
+        "bucket_fake": 18,
+        "bucket_fake_rate": 0.947368
+      },
+      {
+        "prod_id": 4558,
+        "week": "2014-09-22",
+        "rating_bucket": "high_4_5",
+        "bucket_reviews": 19,
+        "bucket_fake": 18,
+        "bucket_fake_rate": 0.947368
+      },
+      {
+        "prod_id": 2548,
+        "week": "2011-08-08",
+        "rating_bucket": "high_4_5",
+        "bucket_reviews": 15,
+        "bucket_fake": 14,
+        "bucket_fake_rate": 0.933333
+      },
+      {
+        "prod_id": 3025,
+        "week": "2013-12-16",
+        "rating_bucket": "high_4_5",
+        "bucket_reviews": 15,
+        "bucket_fake": 14,
+        "bucket_fake_rate": 0.933333
+      },
+      {
+        "prod_id": 3882,
+        "week": "2012-02-13",
+        "rating_bucket": "high_4_5",
+        "bucket_reviews": 14,
+        "bucket_fake": 13,
+        "bucket_fake_rate": 0.928571
+      },
+      {
+        "prod_id": 2707,
+        "week": "2014-02-03",
+        "rating_bucket": "high_4_5",
+        "bucket_reviews": 11,
+        "bucket_fake": 10,
+        "bucket_fake_rate": 0.909091
+      },
+      {
+        "prod_id": 56,
+        "week": "2014-12-15",
+        "rating_bucket": "high_4_5",
+        "bucket_reviews": 26,
+        "bucket_fake": 23,
+        "bucket_fake_rate": 0.884615
+      }
+    ]
+  },
+  "duplicates": {
+    "duplicate_summary": {
+      "text_missing": 0,
+      "unique_text_hashes": 606908,
+      "exact_duplicate_text_reviews": 2342,
+      "exact_duplicate_text_review_share_pct": 0.3849,
+      "top_exact_duplicate_text_frequencies": [
+        32,
+        26,
+        23,
+        20,
+        17,
+        16,
+        15,
+        14,
+        14,
+        14
+      ],
+      "structured_duplicate_rows_count": 0,
+      "structured_duplicate_rows_share_pct": 0.0,
+      "repeated_user_product_pairs": 0,
+      "repeated_user_product_pair_share_pct": 0.0,
+      "reviews_in_repeated_user_product_pairs": 0
+    },
+    "repeat_review_stats": [
+      {
+        "repeat_pair": false,
+        "reviews": 608458,
+        "fake": 80439,
+        "fake_rate": 0.132201
+      }
+    ],
+    "top_duplicate_text_group_stats_no_text": [
+      {
+        "count": 32,
+        "fake_rate": 0.15625,
+        "n_users": 29,
+        "n_products": 31,
+        "ratings": [
+          1.0,
+          2.0,
+          3.0,
+          4.0,
+          5.0
+        ],
+        "date_min": "2010-07-17",
+        "date_max": "2014-11-28",
+        "char_len": 1
+      },
+      {
+        "count": 26,
+        "fake_rate": 0.730769,
+        "n_users": 19,
+        "n_products": 26,
+        "ratings": [
+          3.0,
+          4.0,
+          5.0
+        ],
+        "date_min": "2008-02-24",
+        "date_max": "2014-08-16",
+        "char_len": 4
+      },
+      {
+        "count": 23,
+        "fake_rate": 0.26087,
+        "n_users": 23,
+        "n_products": 21,
+        "ratings": [
+          4.0,
+          5.0
+        ],
+        "date_min": "2006-02-21",
+        "date_max": "2015-01-06",
+        "char_len": 10
+      },
+      {
+        "count": 20,
+        "fake_rate": 0.3,
+        "n_users": 19,
+        "n_products": 18,
+        "ratings": [
+          4.0,
+          5.0
+        ],
+        "date_min": "2011-07-31",
+        "date_max": "2015-01-04",
+        "char_len": 10
+      },
+      {
+        "count": 17,
+        "fake_rate": 0.352941,
+        "n_users": 15,
+        "n_products": 17,
+        "ratings": [
+          2.0,
+          3.0,
+          4.0,
+          5.0
+        ],
+        "date_min": "2009-11-11",
+        "date_max": "2014-10-26",
+        "char_len": 5
+      },
+      {
+        "count": 16,
+        "fake_rate": 0.25,
+        "n_users": 15,
+        "n_products": 14,
+        "ratings": [
+          4.0,
+          5.0
+        ],
+        "date_min": "2011-01-07",
+        "date_max": "2014-12-06",
+        "char_len": 7
+      },
+      {
+        "count": 15,
+        "fake_rate": 0.466667,
+        "n_users": 15,
+        "n_products": 1,
+        "ratings": [
+          4.0
+        ],
+        "date_min": "2014-12-16",
+        "date_max": "2015-01-05",
+        "char_len": 183
+      },
+      {
+        "count": 14,
+        "fake_rate": 0.5,
+        "n_users": 14,
+        "n_products": 14,
+        "ratings": [
+          4.0,
+          5.0
+        ],
+        "date_min": "2011-01-07",
+        "date_max": "2015-01-09",
+        "char_len": 16
+      },
+      {
+        "count": 14,
+        "fake_rate": 0.571429,
+        "n_users": 14,
+        "n_products": 14,
+        "ratings": [
+          2.0,
+          4.0,
+          5.0
+        ],
+        "date_min": "2010-05-16",
+        "date_max": "2014-11-29",
+        "char_len": 7
+      },
+      {
+        "count": 14,
+        "fake_rate": 0.642857,
+        "n_users": 14,
+        "n_products": 1,
+        "ratings": [
+          4.0,
+          5.0
+        ],
+        "date_min": "2014-11-25",
+        "date_max": "2015-01-01",
+        "char_len": 430
+      }
+    ]
+  },
+  "statistical_tests": {
+    "statistical_tests": {
+      "rating_vs_label": {
+        "chi2": 17611.323,
+        "p": "<1e-300",
+        "dof": 4,
+        "cramers_v": 0.17013
+      },
+      "extreme_rating_vs_label": {
+        "chi2": 8906.099,
+        "p": "<1e-300",
+        "dof": 1,
+        "cramers_v": 0.120984
+      },
+      "year_vs_label": {
+        "chi2": 1308.06,
+        "p": "8.179e-274",
+        "dof": 11,
+        "cramers_v": 0.046366
+      },
+      "char_length_bin_vs_label": {
+        "chi2": 12261.509,
+        "p": "<1e-300",
+        "dof": 7,
+        "cramers_v": 0.141957
+      },
+      "char_length_fake_minus_real": {
+        "fake_mean": 474.179,
+        "real_mean": 652.7374,
+        "fake_median": 329.0,
+        "real_median": 485.0,
+        "welch_t": -93.2596,
+        "welch_p": "<1e-300",
+        "cohen_d": -0.309625,
+        "mann_whitney_p": "<1e-300",
+        "cliffs_delta_approx": -0.228315
+      },
+      "word_length_fake_minus_real": {
+        "fake_mean": 87.1317,
+        "real_mean": 119.6146,
+        "fake_median": 60.0,
+        "real_median": 89.0,
+        "welch_t": -92.0396,
+        "welch_p": "<1e-300",
+        "cohen_d": -0.307553,
+        "mann_whitney_p": "<1e-300",
+        "cliffs_delta_approx": -0.226048
+      }
+    },
+    "feature_screen": [
+      {
+        "feature": "rating",
+        "pearson_r": -0.048003,
+        "spearman_r": 0.002885,
+        "roc_auc_higher_feature_fake": 0.50233,
+        "average_precision": 0.139427
+      },
+      {
+        "feature": "extreme",
+        "pearson_r": 0.120989,
+        "spearman_r": 0.120989,
+        "roc_auc_higher_feature_fake": 0.588554,
+        "average_precision": 0.159691
+      },
+      {
+        "feature": "positive",
+        "pearson_r": -0.029865,
+        "spearman_r": -0.029865,
+        "roc_auc_higher_feature_fake": 0.480526,
+        "average_precision": 0.127939
+      },
+      {
+        "feature": "negative",
+        "pearson_r": 0.106665,
+        "spearman_r": 0.106665,
+        "roc_auc_higher_feature_fake": 0.552804,
+        "average_precision": 0.152916
+      },
+      {
+        "feature": "char_len",
+        "pearson_r": -0.104301,
+        "spearman_r": -0.135779,
+        "roc_auc_higher_feature_fake": 0.384279,
+        "average_precision": 0.10211
+      },
+      {
+        "feature": "word_len",
+        "pearson_r": -0.103611,
+        "spearman_r": -0.134677,
+        "roc_auc_higher_feature_fake": 0.385219,
+        "average_precision": 0.102511
+      },
+      {
+        "feature": "upper_ratio",
+        "pearson_r": 0.030416,
+        "spearman_r": 0.004138,
+        "roc_auc_higher_feature_fake": 0.503527,
+        "average_precision": 0.145781
+      },
+      {
+        "feature": "exclam",
+        "pearson_r": 0.006622,
+        "spearman_r": -0.005041,
+        "roc_auc_higher_feature_fake": 0.496088,
+        "average_precision": 0.133719
+      },
+      {
+        "feature": "question",
+        "pearson_r": -0.036752,
+        "spearman_r": -0.051732,
+        "roc_auc_higher_feature_fake": 0.47386,
+        "average_precision": 0.128405
+      },
+      {
+        "feature": "dollar",
+        "pearson_r": -0.049675,
+        "spearman_r": -0.062608,
+        "roc_auc_higher_feature_fake": 0.468463,
+        "average_precision": 0.127826
+      },
+      {
+        "feature": "user_total_reviews",
+        "pearson_r": -0.177647,
+        "spearman_r": -0.321551,
+        "roc_auc_higher_feature_fake": 0.229422,
+        "average_precision": 0.100972
+      },
+      {
+        "feature": "prod_total_reviews",
+        "pearson_r": -0.038235,
+        "spearman_r": -0.090732,
+        "roc_auc_higher_feature_fake": 0.422671,
+        "average_precision": 0.114743
+      }
+    ],
+    "odds_ratios": [
+      {
+        "flag": "extreme",
+        "odds_ratio": 2.046192,
+        "flag_true_reviews": 264959,
+        "flag_true_fake_rate_pct": 17.8862,
+        "flag_false_fake_rate_pct": 9.621
+      },
+      {
+        "flag": "negative",
+        "odds_ratio": 2.176739,
+        "flag_true_reviews": 78577,
+        "flag_true_fake_rate_pct": 22.602,
+        "flag_false_fake_rate_pct": 11.8289
+      },
+      {
+        "flag": "positive",
+        "odds_ratio": 0.824138,
+        "flag_true_reviews": 446764,
+        "flag_true_fake_rate_pct": 12.6116,
+        "flag_false_fake_rate_pct": 14.9016
+      },
+      {
+        "flag": "short_review_le_100_chars",
+        "odds_ratio": 2.434067,
+        "flag_true_reviews": 43152,
+        "flag_true_fake_rate_pct": 25.4287,
+        "flag_false_fake_rate_pct": 12.2882
+      },
+      {
+        "flag": "very_long_gt_2000_chars",
+        "odds_ratio": 0.522733,
+        "flag_true_reviews": 19908,
+        "flag_true_fake_rate_pct": 7.4895,
+        "flag_false_fake_rate_pct": 13.414
+      },
+      {
+        "flag": "one_time_user",
+        "odds_ratio": 5.820522,
+        "flag_true_reviews": 170076,
+        "flag_true_fake_rate_pct": 29.7861,
+        "flag_false_fake_rate_pct": 6.7932
+      },
+      {
+        "flag": "low_review_product_le_30",
+        "odds_ratio": 2.206731,
+        "flag_true_reviews": 24358,
+        "flag_true_fake_rate_pct": 24.3903,
+        "flag_false_fake_rate_pct": 12.7543
+      }
+    ]
+  },
+  "product_rating_structure": {
+    "product_rating_structure_correlations": [
+      {
+        "feature": "reviews",
+        "spearman_with_product_fake_rate": -0.086798,
+        "pearson_with_product_fake_rate": -0.14932
+      },
+      {
+        "feature": "rating_mean",
+        "spearman_with_product_fake_rate": -0.117989,
+        "pearson_with_product_fake_rate": -0.044422
+      },
+      {
+        "feature": "rating_std",
+        "spearman_with_product_fake_rate": 0.346431,
+        "pearson_with_product_fake_rate": 0.036398
+      },
+      {
+        "feature": "extreme_rate",
+        "spearman_with_product_fake_rate": 0.208669,
+        "pearson_with_product_fake_rate": 0.26703
+      },
+      {
+        "feature": "rating_entropy",
+        "spearman_with_product_fake_rate": 0.197142,
+        "pearson_with_product_fake_rate": -0.103704
+      }
+    ]
+  },
+  "temporal_drift_and_cold_start": {
+    "split_summary": [
+      {
+        "split": "train",
+        "reviews": 389423,
+        "fake": 52852,
+        "fake_rate": 0.135719,
+        "rating_mean": 3.910183,
+        "char_mean": 661.000978,
+        "word_mean": 121.079235
+      },
+      {
+        "split": "valid",
+        "reviews": 97399,
+        "fake": 11979,
+        "fake_rate": 0.122989,
+        "rating_mean": 3.947895,
+        "char_mean": 587.840697,
+        "word_mean": 107.906436
+      },
+      {
+        "split": "test",
+        "reviews": 121636,
+        "fake": 15608,
+        "fake_rate": 0.128317,
+        "rating_mean": 3.946973,
+        "char_mean": 560.164178,
+        "word_mean": 102.819618
+      }
+    ],
+    "split_rating": [
+      {
+        "split": "test",
+        "rating_int": 1,
+        "reviews": 8382,
+        "fake": 2173,
+        "fake_rate": 0.259246
+      },
+      {
+        "split": "test",
+        "rating_int": 2,
+        "reviews": 8514,
+        "fake": 1042,
+        "fake_rate": 0.122387
+      },
+      {
+        "split": "test",
+        "rating_int": 3,
+        "reviews": 14938,
+        "fake": 1141,
+        "fake_rate": 0.076382
+      },
+      {
+        "split": "test",
+        "rating_int": 4,
+        "reviews": 39140,
+        "fake": 3899,
+        "fake_rate": 0.099617
+      },
+      {
+        "split": "test",
+        "rating_int": 5,
+        "reviews": 50662,
+        "fake": 7353,
+        "fake_rate": 0.145138
+      },
+      {
+        "split": "train",
+        "rating_int": 1,
+        "reviews": 20930,
+        "fake": 7692,
+        "fake_rate": 0.367511
+      },
+      {
+        "split": "train",
+        "rating_int": 2,
+        "reviews": 27755,
+        "fake": 4319,
+        "fake_rate": 0.155612
+      },
+      {
+        "split": "train",
+        "rating_int": 3,
+        "reviews": 55844,
+        "fake": 4351,
+        "fake_rate": 0.077913
+      },
+      {
+        "split": "train",
+        "rating_int": 4,
+        "reviews": 145727,
+        "fake": 13807,
+        "fake_rate": 0.094746
+      },
+      {
+        "split": "train",
+        "rating_int": 5,
+        "reviews": 139167,
+        "fake": 22683,
+        "fake_rate": 0.162991
+      },
+      {
+        "split": "valid",
+        "rating_int": 1,
+        "reviews": 6283,
+        "fake": 1653,
+        "fake_rate": 0.263091
+      },
+      {
+        "split": "valid",
+        "rating_int": 2,
+        "reviews": 6713,
+        "fake": 881,
+        "fake_rate": 0.131238
+      },
+      {
+        "split": "valid",
+        "rating_int": 3,
+        "reviews": 12335,
+        "fake": 843,
+        "fake_rate": 0.068342
+      },
+      {
+        "split": "valid",
+        "rating_int": 4,
+        "reviews": 32533,
+        "fake": 2765,
+        "fake_rate": 0.084991
+      },
+      {
+        "split": "valid",
+        "rating_int": 5,
+        "reviews": 39535,
+        "fake": 5837,
+        "fake_rate": 0.147641
+      }
+    ],
+    "ks_train_vs_test": [
+      {
+        "feature": "rating",
+        "ks_statistic": 0.059138,
+        "p": "3.260e-282",
+        "train_mean": 3.9102,
+        "test_mean": 3.947,
+        "train_median": 4.0,
+        "test_median": 4.0
+      },
+      {
+        "feature": "char_len",
+        "ks_statistic": 0.097968,
+        "p": "<1e-300",
+        "train_mean": 661.001,
+        "test_mean": 560.1642,
+        "train_median": 495.0,
+        "test_median": 397.0
+      },
+      {
+        "feature": "word_len",
+        "ks_statistic": 0.098035,
+        "p": "<1e-300",
+        "train_mean": 121.0792,
+        "test_mean": 102.8196,
+        "train_median": 91.0,
+        "test_median": 73.0
+      },
+      {
+        "feature": "user_total_reviews",
+        "ks_statistic": 0.132993,
+        "p": "<1e-300",
+        "train_mean": 12.1842,
+        "test_mean": 8.0558,
+        "train_median": 4.0,
+        "test_median": 2.0
+      },
+      {
+        "feature": "prod_total_reviews",
+        "ks_statistic": 0.187699,
+        "p": "<1e-300",
+        "train_mean": 955.0535,
+        "test_mean": 677.1301,
+        "train_median": 504.0,
+        "test_median": 271.0
+      }
+    ],
+    "cold_start": [
+      {
+        "split": "test",
+        "user_seen_in_train": false,
+        "prod_seen_in_train": false,
+        "reviews": 13280,
+        "fake": 2335,
+        "fake_rate": 0.175828
+      },
+      {
+        "split": "test",
+        "user_seen_in_train": false,
+        "prod_seen_in_train": true,
+        "reviews": 75062,
+        "fake": 12484,
+        "fake_rate": 0.166316
+      },
+      {
+        "split": "test",
+        "user_seen_in_train": true,
+        "prod_seen_in_train": false,
+        "reviews": 5773,
+        "fake": 101,
+        "fake_rate": 0.017495
+      },
+      {
+        "split": "test",
+        "user_seen_in_train": true,
+        "prod_seen_in_train": true,
+        "reviews": 27521,
+        "fake": 688,
+        "fake_rate": 0.024999
+      },
+      {
+        "split": "valid",
+        "user_seen_in_train": false,
+        "prod_seen_in_train": false,
+        "reviews": 3923,
+        "fake": 839,
+        "fake_rate": 0.213867
+      },
+      {
+        "split": "valid",
+        "user_seen_in_train": false,
+        "prod_seen_in_train": true,
+        "reviews": 55975,
+        "fake": 10278,
+        "fake_rate": 0.183618
+      },
+      {
+        "split": "valid",
+        "user_seen_in_train": true,
+        "prod_seen_in_train": false,
+        "reviews": 2523,
+        "fake": 73,
+        "fake_rate": 0.028934
+      },
+      {
+        "split": "valid",
+        "user_seen_in_train": true,
+        "prod_seen_in_train": true,
+        "reviews": 34978,
+        "fake": 789,
+        "fake_rate": 0.022557
+      }
+    ],
+    "test_user_seen_train_share_pct": 27.3718,
+    "test_product_seen_train_share_pct": 84.3361
+  },
+  "leakage_diagnostics": {
+    "leakage_diagnostics": [
+      {
+        "feature": "user_label_rate_all_LEAKY",
+        "roc_auc": 0.999895,
+        "average_precision": 0.999215,
+        "note": "전체 기간 라벨 집계이므로 진단용이며 모델 입력으로 사용하면 누수다."
+      },
+      {
+        "feature": "prod_label_rate_all_LEAKY",
+        "roc_auc": 0.670577,
+        "average_precision": 0.274548,
+        "note": "전체 기간 라벨 집계이므로 진단용이며 모델 입력으로 사용하면 누수다."
+      }
+    ]
+  }
+}

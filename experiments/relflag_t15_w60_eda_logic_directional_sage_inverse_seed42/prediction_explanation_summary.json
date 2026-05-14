@@ -1,0 +1,28 @@
+{
+  "predictions": "experiments/relflag_t15_w60_eda_logic_directional_sage_inverse_seed42/predictions_all.csv",
+  "sampled_nodes": "data/sampled_relative_flags_q75_m2/sampled_review_nodes.csv.gz",
+  "output": "experiments/relflag_t15_w60_eda_logic_directional_sage_inverse_seed42/prediction_explanations.csv",
+  "shock_threshold": 0.75,
+  "prior_product_review_count_q25": 536.0,
+  "prior_product_review_count_q75": 1821.0,
+  "product_std_floor": 0.933747155,
+  "user_consistency_cutoff": 0.749999463558197,
+  "template_similarity_q90": 0.717777144908905,
+  "tag_counts": {
+    "평판취약상품_평점충격": 2963,
+    "긍정홍보형_평점상승": 7972,
+    "부정공격형_평점하락": 3425,
+    "긍정홍보형_취약평판상승": 1661,
+    "부정공격형_성숙상품하락": 1237,
+    "평점대비_설명부족": 7287,
+    "긴리뷰형_위장가능성": 3868,
+    "약한템플릿반복": 2763,
+    "정상사용자_보호맥락": 4537,
+    "정상사용자_일관평점충분설명": 1844,
+    "짧지만_기존사용자일관맥락": 729
+  },
+  "notes": [
+    "These tags are diagnostic explanations, not training labels.",
+    "No label-derived aggregate is used to create the tags."
+  ]
+}

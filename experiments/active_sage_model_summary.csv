@@ -1,0 +1,2 @@
+experiment,status,graph_path,best_epoch,best_threshold,valid_pr_auc,valid_macro_f1,test_pr_auc,test_roc_auc,test_macro_f1,test_precision,test_recall,test_accuracy,note
+relflag_edge_t15_w60_thr075_sage_inverse_seed42,skipped_existing,data/graph_relflag_edge_t15_w60_thr075/graph_rur_custom2.pt,71,0.75,0.3940372602153449,0.6458194207836456,0.4900669033341119,0.7851307169123466,0.6792789764425258,0.4956369982547993,0.4965034965034965,0.7839355925856581,active topk15 window60 SAGE model

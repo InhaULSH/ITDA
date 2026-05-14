@@ -1,0 +1,52 @@
+{
+  "method": "temporal",
+  "random_state": 42,
+  "total_nodes": 26701,
+  "ratios": {
+    "train": 0.64,
+    "valid": 0.16,
+    "test": 0.2
+  },
+  "splits": {
+    "train": {
+      "nodes": 17088,
+      "fake": 2372,
+      "real": 14716,
+      "fake_rate": 0.13881086142322097,
+      "date_min": "2007-08-06",
+      "date_max": "2014-02-08"
+    },
+    "valid": {
+      "nodes": 4272,
+      "fake": 768,
+      "real": 3504,
+      "fake_rate": 0.1797752808988764,
+      "date_min": "2014-02-08",
+      "date_max": "2014-07-28"
+    },
+    "test": {
+      "nodes": 5341,
+      "fake": 1144,
+      "real": 4197,
+      "fake_rate": 0.21419209885789178,
+      "date_min": "2014-07-28",
+      "date_max": "2015-01-10"
+    }
+  },
+  "inputs": {
+    "sampled_nodes": "data/sampled_relative_flags_q75_m2/sampled_review_nodes.csv.gz",
+    "sampled_labels": "data/sampled_relative_flags_q75_m2/sampled_node_labels.npy"
+  },
+  "outputs": {
+    "train_mask": "data/splits_relative_flags_q75_m2/train_mask.npy",
+    "valid_mask": "data/splits_relative_flags_q75_m2/valid_mask.npy",
+    "test_mask": "data/splits_relative_flags_q75_m2/test_mask.npy",
+    "summary": "data/splits_relative_flags_q75_m2/split_summary.json"
+  },
+  "notes": [
+    "Only data/sampled artifacts are used.",
+    "Masks are indexed by sampled_node_idx.",
+    "Labels are used only for stratification in random split and summary diagnostics.",
+    "Example command: python MakeSplits.py --method temporal"
+  ]
+}

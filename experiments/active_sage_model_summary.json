@@ -1,0 +1,18 @@
+[
+  {
+    "experiment": "relflag_edge_t15_w60_thr075_sage_inverse_seed42",
+    "status": "skipped_existing",
+    "graph_path": "data/graph_relflag_edge_t15_w60_thr075/graph_rur_custom2.pt",
+    "best_epoch": 71,
+    "best_threshold": 0.75,
+    "valid_pr_auc": 0.3940372602153449,
+    "valid_macro_f1": 0.6458194207836456,
+    "test_pr_auc": 0.4900669033341119,
+    "test_roc_auc": 0.7851307169123466,
+    "test_macro_f1": 0.6792789764425258,
+    "test_precision": 0.4956369982547993,
+    "test_recall": 0.4965034965034965,
+    "test_accuracy": 0.7839355925856581,
+    "note": "active topk15 window60 SAGE model"
+  }
+]

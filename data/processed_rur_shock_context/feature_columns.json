@@ -1,0 +1,70 @@
+{
+  "numeric_feature_columns": [
+    "rating_norm",
+    "rating_direction",
+    "extreme_rating",
+    "log_word_len",
+    "short_review_flag",
+    "unique_token_ratio",
+    "avg_token_len",
+    "numeric_token_flag",
+    "upper_ratio",
+    "exclamation_count",
+    "question_count",
+    "log1p_same_text_count_in_product_week",
+    "log1p_prior_user_review_count",
+    "is_new_user_at_review_time",
+    "log1p_days_since_user_last_review",
+    "has_prior_user_review_7d",
+    "has_prior_user_review_30d",
+    "log1p_prior_user_active_span_days",
+    "prior_user_avg_rating",
+    "prior_user_rating_std",
+    "prior_user_extreme_ratio",
+    "abs_rating_deviation_from_prior_user_mean",
+    "log1p_prior_product_review_count",
+    "prior_product_avg_rating",
+    "prior_product_rating_std",
+    "prior_product_extreme_ratio",
+    "log1p_product_reviews_last_7d",
+    "log1p_product_reviews_last_30d",
+    "rating_deviation_from_prior_product_mean",
+    "rating_impact_signed",
+    "rating_impact_abs",
+    "log1p_product_age_days",
+    "weak_product_prior_count_flag",
+    "new_user_short_extreme_flag",
+    "short_weak_product_flag",
+    "extreme_rating_impact_abs",
+    "new_user_rating_impact_abs"
+  ],
+  "target_column": "is_fake",
+  "node_id_column": "node_idx",
+  "review_id_column": "review_id",
+  "excluded_from_model_input": [
+    "tag",
+    "label",
+    "user_id",
+    "prod_id",
+    "date",
+    "text_hash",
+    "product_day_review_count",
+    "product_week_rating_bucket_size",
+    "raw text",
+    "full-period user/product aggregates",
+    "any label-rate aggregate"
+  ],
+  "deferred_features": {
+    "text_embedding": "Fit TF-IDF/SVD or another text encoder after sampling and train/valid/test split to avoid leakage.",
+    "edges": "No edge_index is created in this script. Use relation_candidate_keys.csv.gz in the next graph-design step."
+  },
+  "pyg_artifact": {
+    "file": "review_node_graph_no_edges.pt",
+    "description": "PyTorch Geometric Data object with x, y, node_idx, review_id and an empty edge_index."
+  },
+  "planned_relations": {
+    "basic_relation": "same_user_prior_recent",
+    "custom_relation": "weak_product_rating_shock_edge",
+    "optional_context_relation": "product_prior_context"
+  }
+}

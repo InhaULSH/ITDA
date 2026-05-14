@@ -1,0 +1,112 @@
+{
+  "input_nodes": 608458,
+  "input_products": 5044,
+  "input_users": 260239,
+  "input_product_week_units": 290477,
+  "week_frequency": "W-SUN",
+  "strategy": "legacy",
+  "strategy_details": {
+    "strategy": "legacy"
+  },
+  "base_candidate_rule": {
+    "min_reviews_per_product_week": 10,
+    "min_users_per_product_week": 8
+  },
+  "flag_rule": {
+    "quantile_for_7_numeric_flags": 0.75,
+    "min_flags_required": 2,
+    "local_template_repeat_flag": "True if at least one review in the product-week has same_text_count_in_product_week >= 2."
+  },
+  "flag_thresholds": {
+    "review_growth_flag": 0.55338526,
+    "new_user_ratio_flag": 0.130753975,
+    "extreme_rating_ratio_flag": 0.9360689200000001,
+    "short_review_ratio_flag": 0.06289710300000001,
+    "weak_product_flag": 0.22279496,
+    "rating_deviation_flag": 0.9078264207639826,
+    "rating_direction_concentration_flag": 0.10526316,
+    "_flag_mode": "relative"
+  },
+  "product_week_quantiles": {
+    "n_reviews": {
+      "0.5": 1.0,
+      "0.75": 2.0,
+      "0.8": 3.0,
+      "0.85": 3.0,
+      "0.9": 4.0,
+      "0.95": 6.0,
+      "0.975": 8.0,
+      "0.99": 11.0,
+      "0.995": 14.0
+    },
+    "n_users": {
+      "0.5": 1.0,
+      "0.75": 2.0,
+      "0.8": 3.0,
+      "0.85": 3.0,
+      "0.9": 4.0,
+      "0.95": 6.0,
+      "0.975": 8.0,
+      "0.99": 11.0,
+      "0.995": 14.0
+    }
+  },
+  "base_candidates": {
+    "units": 4087,
+    "nodes": 59467
+  },
+  "selected": {
+    "product_week_units": 1957,
+    "nodes": 26701,
+    "node_share_pct": 4.388306177254634,
+    "products": 243,
+    "users": 22914,
+    "date_min": "2007-08-06",
+    "date_max": "2015-01-10",
+    "label_counts_for_diagnostics_only": {
+      "0": 22417,
+      "1": 4284
+    },
+    "fake_rate_for_diagnostics_only": 0.160443429085053
+  },
+  "selected_flag_prevalence_by_unit": {
+    "review_growth_flag": {
+      "units": 887,
+      "share": 0.4532447623914154
+    },
+    "new_user_ratio_flag": {
+      "units": 826,
+      "share": 0.4220746039856924
+    },
+    "extreme_rating_ratio_flag": {
+      "units": 1018,
+      "share": 0.5201839550332141
+    },
+    "short_review_ratio_flag": {
+      "units": 834,
+      "share": 0.42616249361267244
+    },
+    "weak_product_flag": {
+      "units": 873,
+      "share": 0.4460909555442003
+    },
+    "rating_deviation_flag": {
+      "units": 706,
+      "share": 0.36075625958099133
+    },
+    "rating_direction_concentration_flag": {
+      "units": 790,
+      "share": 0.4036791006642821
+    },
+    "local_template_repeat_flag": {
+      "units": 29,
+      "share": 0.01481859989780276
+    }
+  },
+  "notes": [
+    "The target label is never used to choose sampled nodes.",
+    "The legacy strategy samples product-week units; rur_shock_context samples rating-shock seeds plus causal product/user context and normal hard negatives; legacy_plus_shock_context preserves legacy units first, then adds weak-shock context.",
+    "Edges are still not constructed in this step.",
+    "sampled_node_idx is the row index for sampled feature arrays; original_node_idx preserves the preprocessed node_idx."
+  ]
+}

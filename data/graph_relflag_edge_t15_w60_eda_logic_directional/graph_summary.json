@@ -1,0 +1,264 @@
+{
+  "n_nodes": 26701,
+  "numeric_dim": 57,
+  "text_dim": 128,
+  "total_feature_dim": 185,
+  "graphs": {
+    "graph_rur_custom2.pt": {
+      "n_edges": 15304,
+      "edge_type_counts": {
+        "0": 11038,
+        "2": 4266
+      }
+    }
+  },
+  "splits": {
+    "train": {
+      "nodes": 17088,
+      "fake": 2372,
+      "real": 14716,
+      "fake_rate": 0.13881086142322097
+    },
+    "valid": {
+      "nodes": 4272,
+      "fake": 768,
+      "real": 3504,
+      "fake_rate": 0.1797752808988764
+    },
+    "test": {
+      "nodes": 5341,
+      "fake": 1144,
+      "real": 4197,
+      "fake_rate": 0.21419209885789178
+    }
+  },
+  "target_splits": {
+    "target_all": {
+      "nodes": 26701,
+      "fake": 4284,
+      "real": 22417,
+      "fake_rate": 0.160443429085053
+    },
+    "train": {
+      "nodes": 17088,
+      "fake": 2372,
+      "real": 14716,
+      "fake_rate": 0.13881086142322097
+    },
+    "valid": {
+      "nodes": 4272,
+      "fake": 768,
+      "real": 3504,
+      "fake_rate": 0.1797752808988764
+    },
+    "test": {
+      "nodes": 5341,
+      "fake": 1144,
+      "real": 4197,
+      "fake_rate": 0.21419209885789178
+    }
+  },
+  "feature_profile": "eda_logic_directional",
+  "numeric_feature_columns": [
+    "rating_norm",
+    "rating_direction",
+    "extreme_rating",
+    "log_word_len",
+    "short_review_flag",
+    "unique_token_ratio",
+    "avg_token_len",
+    "numeric_token_flag",
+    "upper_ratio",
+    "exclamation_count",
+    "question_count",
+    "log1p_same_text_count_in_product_week",
+    "log1p_prior_user_review_count",
+    "is_new_user_at_review_time",
+    "log1p_days_since_user_last_review",
+    "has_prior_user_review_7d",
+    "has_prior_user_review_30d",
+    "log1p_prior_user_active_span_days",
+    "prior_user_avg_rating",
+    "prior_user_rating_std",
+    "prior_user_extreme_ratio",
+    "abs_rating_deviation_from_prior_user_mean",
+    "log1p_prior_product_review_count",
+    "prior_product_avg_rating",
+    "prior_product_rating_std",
+    "prior_product_extreme_ratio",
+    "log1p_product_reviews_last_7d",
+    "log1p_product_reviews_last_30d",
+    "rating_deviation_from_prior_product_mean",
+    "rating_impact_signed",
+    "rating_impact_abs",
+    "log1p_product_age_days",
+    "weak_product_prior_count_flag",
+    "new_user_short_extreme_flag",
+    "short_weak_product_flag",
+    "extreme_rating_impact_abs",
+    "new_user_rating_impact_abs",
+    "word_len_ratio_to_train_rating_history_median",
+    "is_short_by_train_rating_history_q25",
+    "text_sufficient_by_train_rating_history_median",
+    "positive_standardized_rating_deviation_from_prior_product_mean",
+    "negative_standardized_rating_deviation_from_prior_product_mean",
+    "high_product_reputation_by_train_q75",
+    "low_reputation_and_abs_standardized_product_deviation",
+    "product_reviews_last_7d_share_of_prior_count",
+    "product_reviews_last_30d_share_of_prior_count",
+    "standardized_user_rating_deviation_from_prior_mean",
+    "abs_standardized_user_rating_deviation_from_prior_mean",
+    "returning_recent_user_and_text_sufficient",
+    "weak_template_similarity_max_product_week",
+    "positive_promotion_low_reputation_shock",
+    "negative_attack_high_reputation_shock",
+    "positive_extreme_rating_shock",
+    "negative_extreme_rating_shock",
+    "disguised_high_effort_sparse_user_shock",
+    "returning_recent_user_consistent_rating_and_text_sufficient",
+    "returning_recent_user_consistent_rating"
+  ],
+  "extra_numeric_feature_columns": [
+    "word_len_ratio_to_train_rating_history_median",
+    "is_short_by_train_rating_history_q25",
+    "text_sufficient_by_train_rating_history_median",
+    "positive_standardized_rating_deviation_from_prior_product_mean",
+    "negative_standardized_rating_deviation_from_prior_product_mean",
+    "high_product_reputation_by_train_q75",
+    "low_reputation_and_abs_standardized_product_deviation",
+    "product_reviews_last_7d_share_of_prior_count",
+    "product_reviews_last_30d_share_of_prior_count",
+    "standardized_user_rating_deviation_from_prior_mean",
+    "abs_standardized_user_rating_deviation_from_prior_mean",
+    "returning_recent_user_and_text_sufficient",
+    "weak_template_similarity_max_product_week",
+    "positive_promotion_low_reputation_shock",
+    "negative_attack_high_reputation_shock",
+    "positive_extreme_rating_shock",
+    "negative_extreme_rating_shock",
+    "disguised_high_effort_sparse_user_shock",
+    "returning_recent_user_consistent_rating_and_text_sufficient",
+    "returning_recent_user_consistent_rating"
+  ],
+  "text_sufficiency_feature_cutoffs": {
+    "history_bin_train_quantiles": [
+      536.0,
+      1104.0,
+      1821.0
+    ],
+    "word_len_q25": 39.0,
+    "word_len_median": 82.0
+  },
+  "product_prior_context_feature_cutoffs": {
+    "train_prior_product_rating_std_q25_positive": 0.933747155,
+    "train_prior_product_review_count_q25": 536.0,
+    "train_prior_product_review_count_q75": 1821.0
+  },
+  "user_context_feature_cutoffs": {
+    "train_prior_user_rating_std_q25_positive": 0.5,
+    "train_abs_standardized_user_deviation_q25_positive": 0.749999463558197,
+    "train_abs_standardized_user_deviation_consistency_cutoff": 0.749999463558197
+  },
+  "template_similarity_feature_cutoffs": {
+    "train_q90_template_similarity": 0.717777144908905
+  },
+  "feature_design_notes": {
+    "profile": "eda_logic_directional",
+    "rationale": "Preserve original model stability while adding direction-aware manipulation features and normal-user protection features. Positive rating shocks are represented as promotion pressure on weak-reputation products, while negative shocks are represented as attack pressure on high-reputation products. Returning-user consistency and sufficient explanation are added as false-positive protection context.",
+    "kept_original_columns": [
+      "rating_norm",
+      "rating_direction",
+      "extreme_rating",
+      "log_word_len",
+      "short_review_flag",
+      "unique_token_ratio",
+      "avg_token_len",
+      "numeric_token_flag",
+      "upper_ratio",
+      "exclamation_count",
+      "question_count",
+      "log1p_same_text_count_in_product_week",
+      "log1p_prior_user_review_count",
+      "is_new_user_at_review_time",
+      "log1p_days_since_user_last_review",
+      "has_prior_user_review_7d",
+      "has_prior_user_review_30d",
+      "log1p_prior_user_active_span_days",
+      "prior_user_avg_rating",
+      "prior_user_rating_std",
+      "prior_user_extreme_ratio",
+      "abs_rating_deviation_from_prior_user_mean",
+      "log1p_prior_product_review_count",
+      "prior_product_avg_rating",
+      "prior_product_rating_std",
+      "prior_product_extreme_ratio",
+      "log1p_product_reviews_last_7d",
+      "log1p_product_reviews_last_30d",
+      "rating_deviation_from_prior_product_mean",
+      "rating_impact_signed",
+      "rating_impact_abs",
+      "log1p_product_age_days",
+      "weak_product_prior_count_flag",
+      "new_user_short_extreme_flag",
+      "short_weak_product_flag",
+      "extreme_rating_impact_abs",
+      "new_user_rating_impact_abs"
+    ],
+    "added_engineered_columns": [
+      "word_len_ratio_to_train_rating_history_median",
+      "is_short_by_train_rating_history_q25",
+      "text_sufficient_by_train_rating_history_median",
+      "positive_standardized_rating_deviation_from_prior_product_mean",
+      "negative_standardized_rating_deviation_from_prior_product_mean",
+      "high_product_reputation_by_train_q75",
+      "low_reputation_and_abs_standardized_product_deviation",
+      "product_reviews_last_7d_share_of_prior_count",
+      "product_reviews_last_30d_share_of_prior_count",
+      "standardized_user_rating_deviation_from_prior_mean",
+      "abs_standardized_user_rating_deviation_from_prior_mean",
+      "returning_recent_user_and_text_sufficient",
+      "weak_template_similarity_max_product_week",
+      "positive_promotion_low_reputation_shock",
+      "negative_attack_high_reputation_shock",
+      "positive_extreme_rating_shock",
+      "negative_extreme_rating_shock",
+      "disguised_high_effort_sparse_user_shock",
+      "returning_recent_user_consistent_rating_and_text_sufficient",
+      "returning_recent_user_consistent_rating"
+    ],
+    "not_added_due_to_existing_equivalent": [],
+    "user_consistency_cutoffs": {
+      "train_abs_standardized_user_deviation_q25_positive": 0.749999463558197,
+      "train_abs_standardized_user_deviation_consistency_cutoff": 0.749999463558197
+    }
+  },
+  "behavior_shift_feature_notes": {},
+  "scaling": {
+    "fit_on": "train_mask only",
+    "params": "data/graph_relflag_edge_t15_w60_eda_logic_directional/feature_scaler_params.npz",
+    "nan_inf_policy": "NaN, +inf, and -inf are replaced with 0 before and after scaling."
+  },
+  "inputs": {
+    "numeric": "data/sampled_relative_flags_q75_m2/sampled_node_features_numeric.npy",
+    "labels": "data/sampled_relative_flags_q75_m2/sampled_node_labels.npy",
+    "review_ids": "data/sampled_relative_flags_q75_m2/sampled_node_review_ids.npy",
+    "nodes": "data/sampled_relative_flags_q75_m2/sampled_review_nodes.csv.gz",
+    "text": "data/embeddings_relative_flags_q75_m2/sampled_text_tfidf_svd.npy",
+    "edge_index": "data/edges_relflag_edge_t15_w60_thr075/edge_index.npy",
+    "edge_type": "data/edges_relflag_edge_t15_w60_thr075/edge_type.npy",
+    "train_mask": "data/splits_relative_flags_q75_m2/train_mask.npy",
+    "valid_mask": "data/splits_relative_flags_q75_m2/valid_mask.npy",
+    "test_mask": "data/splits_relative_flags_q75_m2/test_mask.npy"
+  },
+  "outputs": {
+    "graph_rur_custom2": "data/graph_relflag_edge_t15_w60_eda_logic_directional/graph_rur_custom2.pt",
+    "feature_scaler_params": "data/graph_relflag_edge_t15_w60_eda_logic_directional/feature_scaler_params.npz",
+    "summary": "data/graph_relflag_edge_t15_w60_eda_logic_directional/graph_summary.json"
+  },
+  "notes": [
+    "Only sampled artifacts are used.",
+    "x is numeric sampled node features concatenated with sampled text embeddings.",
+    "Raw label, tag, user_id, prod_id, and date values are not included in x.",
+    "edge_index is indexed by sampled_node_idx."
+  ]
+}
