@@ -1,0 +1,31 @@
+{
+  "governance_layer_version": "2026-05-19.q60.threshold0794",
+  "generated_at_utc": "2026-05-19T13:11:27.622575+00:00",
+  "model_id": "campaign_quality_q60_relation_sage_mlp_equal_seed42",
+  "operating_threshold": 0.794,
+  "files": {
+    "model_card": "model_card.json",
+    "model_metrics": "model_metrics.csv",
+    "threshold_policy": "threshold_policy.csv",
+    "data_lineage": "data_lineage.csv",
+    "artifact_registry": "artifact_registry.csv",
+    "access_policy": "access_policy.csv"
+  },
+  "streamlit_contract": {
+    "read_only_files": [
+      "model_card.json",
+      "model_metrics.csv",
+      "threshold_policy.csv",
+      "data_lineage.csv",
+      "artifact_registry.csv",
+      "access_policy.csv"
+    ],
+    "mutable_operational_tables": [
+      "ops/governance_ops.db:threshold_change_log",
+      "ops/governance_ops.db:audit_log",
+      "ops/governance_ops.db:model_review_notes"
+    ],
+    "default_role": "viewer",
+    "admin_role": "admin"
+  }
+}

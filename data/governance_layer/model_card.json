@@ -1,0 +1,97 @@
+{
+  "model_id": "campaign_quality_q60_relation_sage_mlp_equal_seed42",
+  "generated_at_utc": "2026-05-19T13:11:27.622575+00:00",
+  "model_type": "relation_sage_mlp",
+  "graph_path": "data/graph_campaign_quality_q60_top3_b6000_s020/graph_rur_custom2.pt",
+  "operating_threshold": 0.794,
+  "validation_selected_threshold": 0.78,
+  "threshold_note": "Fixed post-training operating threshold chosen from validation-side precision-first threshold review. It does not change the trained model weights.",
+  "training": {
+    "best_epoch": 60,
+    "early_stop_metric": "valid_pr_auc",
+    "threshold_selection": "prevalence_constrained_macro_f1",
+    "loss_weighting": "inverse_frequency",
+    "class_balanced_beta": null,
+    "hidden_dim": 128,
+    "num_layers": 2,
+    "dropout": 0.55,
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "seed": 42
+  },
+  "graph": {
+    "n_nodes": 26701,
+    "numeric_dim": 54,
+    "text_dim": 128,
+    "total_feature_dim": 182,
+    "total_directed_edges": 21304,
+    "overall_isolated_nodes": 17381,
+    "relation_edge_counts": {
+      "0": 11038,
+      "1": 6000,
+      "2": 4266
+    },
+    "relation_stats": {
+      "0": {
+        "relation": "R-U-R",
+        "directed_edges": 11038,
+        "undirected_edges": 5519,
+        "mean_degree": 0.8267855136511741,
+        "isolated_nodes": 20257
+      },
+      "1": {
+        "relation": "filtered_campaign_pair",
+        "directed_edges": 6000,
+        "undirected_edges": 3553,
+        "mean_degree": 0.44942136998614285,
+        "isolated_nodes": 23903
+      },
+      "2": {
+        "relation": "weak_product_rating_shock_edge",
+        "directed_edges": 4266,
+        "undirected_edges": 2133,
+        "mean_degree": 0.31953859406014756,
+        "isolated_nodes": 26312
+      }
+    }
+  },
+  "performance": {
+    "valid": {
+      "pr_auc": 0.4441336701873743,
+      "roc_auc": 0.7850414258704338,
+      "macro_f1": 0.6600831978094555,
+      "precision": 0.4689863842662632,
+      "recall": 0.4036458333333333,
+      "accuracy": 0.81062734082397,
+      "tn": 3153,
+      "fp": 351,
+      "fn": 458,
+      "tp": 310,
+      "threshold": 0.794
+    },
+    "test": {
+      "pr_auc": 0.5288475351597811,
+      "roc_auc": 0.8051183537691758,
+      "macro_f1": 0.6962006747836291,
+      "precision": 0.5273052820053715,
+      "recall": 0.5148601398601399,
+      "accuracy": 0.7972289833364539,
+      "tn": 3669,
+      "fp": 528,
+      "fn": 555,
+      "tp": 589,
+      "threshold": 0.794
+    }
+  },
+  "leakage_controls": [
+    "Raw label/tag and label-rate aggregates are not used as model input features.",
+    "Feature scaling is fitted on train_mask only.",
+    "Filtered Campaign Pair component threshold is derived from the train mask.",
+    "Test split is used for final reporting only, not for model/threshold selection."
+  ],
+  "streamlit_usage": {
+    "primary_file": "governance_manifest.json",
+    "hide_eval_columns_by_default": true,
+    "recommended_cache_key": "model_id + operating_threshold + governance_layer_version"
+  }
+}

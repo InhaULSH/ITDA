@@ -440,6 +440,61 @@ def binary_series(nodes: pd.DataFrame, column: str, default: int = 0) -> pd.Seri
     return values.astype("float64")
 
 
+def add_campaign_quality_features(inputs: dict[str, Any]) -> list[str]:
+    nodes = inputs["nodes"].copy()
+    sampled_dir = inputs["paths"]["nodes"].parent
+    unit_path = sampled_dir / "product_week_sampling_units.csv.gz"
+    required = [
+        "prod_id",
+        "week",
+        "new_user_ratio_lift_4w",
+        "short_review_ratio_lift_4w",
+        "word_len_drop_ratio_4w",
+        "direction_concentration_lift_4w",
+        "same_dir_log_count_lift_4w",
+        "product_day_review_count",
+        "product_week_rating_bucket_size",
+    ]
+    missing = [col for col in required if col not in nodes.columns]
+    if missing:
+        raise ValueError(f"Cannot add campaign-quality features; sampled nodes are missing: {missing}")
+    if not unit_path.exists():
+        raise FileNotFoundError(f"Cannot add log1p_product_week_n_users; missing {unit_path}")
+
+    units = pd.read_csv(unit_path, usecols=["prod_id", "week", "n_users"])
+    units["week"] = units["week"].astype(str)
+    nodes["week"] = nodes["week"].astype(str)
+    merged = nodes[["prod_id", "week"]].merge(units, on=["prod_id", "week"], how="left", sort=False)
+    n_users = pd.to_numeric(merged["n_users"], errors="coerce").fillna(1.0).clip(lower=0.0)
+
+    feature_map = {
+        "new_user_ratio_lift_4w": numeric_series(nodes, "new_user_ratio_lift_4w"),
+        "short_review_ratio_lift_4w": numeric_series(nodes, "short_review_ratio_lift_4w"),
+        "word_len_drop_ratio_4w": numeric_series(nodes, "word_len_drop_ratio_4w"),
+        "direction_concentration_lift_4w": numeric_series(nodes, "direction_concentration_lift_4w"),
+        "same_dir_log_count_lift_4w": numeric_series(nodes, "same_dir_log_count_lift_4w"),
+        "log1p_product_week_n_users": np.log1p(n_users).astype("float64"),
+        "micro_volume": np.log1p(numeric_series(nodes, "product_day_review_count").clip(lower=0.0)),
+        "direction_bucket_size": np.log1p(numeric_series(nodes, "product_week_rating_bucket_size").clip(lower=0.0)),
+    }
+    added_columns = list(feature_map.keys())
+    feature_array = np.column_stack(
+        [np.asarray(feature_map[name], dtype=np.float32) for name in added_columns]
+    ).astype(np.float32)
+    feature_array = np.nan_to_num(feature_array, nan=0.0, posinf=0.0, neginf=0.0)
+    inputs["numeric"] = np.concatenate([inputs["numeric"].astype(np.float32, copy=False), feature_array], axis=1)
+    inputs["extra_numeric_feature_columns"] = inputs.get("extra_numeric_feature_columns", []) + added_columns
+    inputs["campaign_quality_feature_notes"] = {
+        "columns": added_columns,
+        "product_week_unit_source": path_for_summary(unit_path),
+        "rationale": (
+            "Append compact product-week and product-week-direction concentration-quality features selected by "
+            "validation performance. The features avoid label/fake-rate aggregates and keep raw IDs out of x."
+        ),
+    }
+    return added_columns
+
+
 def train_quantile(values: pd.Series, train_mask: np.ndarray, q: float, default: float = 0.0) -> float:
     train_values = pd.to_numeric(values.loc[train_mask], errors="coerce").replace([np.inf, -np.inf], np.nan).dropna()
     if train_values.empty:
@@ -943,6 +998,21 @@ def filter_edges(edge_index: np.ndarray, edge_type: np.ndarray, keep_types: set[
     return filtered_edge_index.astype(np.int64, copy=False), filtered_edge_type.astype(np.int64, copy=False)
 
 
+def parse_edge_type_set(raw: str) -> set[int]:
+    keep_types: set[int] = set()
+    for part in raw.split(","):
+        part = part.strip()
+        if not part:
+            continue
+        keep_types.add(int(part))
+    if not keep_types:
+        raise ValueError("--graph-keep-edge-types must contain at least one edge type.")
+    invalid = sorted(keep_types - {0, 1, 2})
+    if invalid:
+        raise ValueError(f"--graph-keep-edge-types contains invalid edge types: {invalid}")
+    return keep_types
+
+
 def summarize_graph(edge_type: np.ndarray) -> dict[str, Any]:
     values, counts = np.unique(edge_type.astype(np.int64), return_counts=True)
     return {
@@ -991,8 +1061,9 @@ def save_graphs(
     scaler_path = output_dir / "feature_scaler_params.npz"
     summary_path = output_dir / "graph_summary.json"
 
-    log("Saving graph_rur_custom2.pt.")
-    rc_edge_index, rc_edge_type = filter_edges(edge_index, edge_type, {0, 2})
+    keep_edge_types = parse_edge_type_set(args.graph_keep_edge_types)
+    log(f"Saving graph_rur_custom2.pt with edge types: {sorted(keep_edge_types)}.")
+    rc_edge_index, rc_edge_type = filter_edges(edge_index, edge_type, keep_edge_types)
     rc_data = make_data(
         torch, Data, x, labels, rc_edge_index, rc_edge_type, train_mask, valid_mask, test_mask,
         target_mask, train_target_mask, valid_target_mask, test_target_mask, review_ids
@@ -1012,6 +1083,7 @@ def save_graphs(
         "text_dim": text_dim,
         "total_feature_dim": int(x.shape[1]),
         "graphs": graph_summaries,
+        "graph_keep_edge_types": sorted(int(value) for value in keep_edge_types),
         "splits": {
             "train": split_summary(labels, train_mask),
             "valid": split_summary(labels, valid_mask),
@@ -1032,6 +1104,7 @@ def save_graphs(
         "template_similarity_feature_cutoffs": inputs.get("template_similarity_feature_cutoffs", {}),
         "feature_design_notes": inputs.get("feature_design_notes", {}),
         "behavior_shift_feature_notes": inputs.get("behavior_shift_feature_notes", {}),
+        "campaign_quality_feature_notes": inputs.get("campaign_quality_feature_notes", {}),
         "scaling": {
             "fit_on": "train_mask only",
             "params": path_for_summary(scaler_path),
@@ -1070,6 +1143,9 @@ def run_build_graph_dataset(args: argparse.Namespace) -> None:
         if args.add_behavior_shift_features:
             added = add_behavior_shift_features(inputs)
             log(f"Added prior-4-week behavior-shift features: {', '.join(added)}")
+        if args.add_campaign_quality_features:
+            added = add_campaign_quality_features(inputs)
+            log(f"Added campaign-quality features: {', '.join(added)}")
     else:
         if args.add_product_prior_context_features:
             added = add_product_prior_context_features(inputs)
@@ -1077,6 +1153,9 @@ def run_build_graph_dataset(args: argparse.Namespace) -> None:
         if args.add_behavior_shift_features:
             added = add_behavior_shift_features(inputs)
             log(f"Added prior-4-week behavior-shift features: {', '.join(added)}")
+        if args.add_campaign_quality_features:
+            added = add_campaign_quality_features(inputs)
+            log(f"Added campaign-quality features: {', '.join(added)}")
     x, scaler_mean, scaler_std = build_scaled_features(inputs["numeric"], inputs["text"], inputs["train_mask"])
     save_graphs(torch, Data, args.output_dir, inputs, x, scaler_mean, scaler_std, args)
     log(f"Done. Saved PyG graphs to: {args.output_dir}")
@@ -1123,6 +1202,19 @@ def parse_args() -> argparse.Namespace:
             "Append individual prior-4-week behavior-shift features already present in sampled nodes. "
             "Composite behavior scores and label-rate aggregates are not added."
         ),
+    )
+    parser.add_argument(
+        "--add-campaign-quality-features",
+        action="store_true",
+        help=(
+            "Append the validation-selected compact campaign-quality feature set: four behavior-lift components, "
+            "same-direction lift, product-week user count, product-day micro volume, and rating-direction bucket size."
+        ),
+    )
+    parser.add_argument(
+        "--graph-keep-edge-types",
+        default="0,2",
+        help="Comma-separated edge types kept in graph_rur_custom2.pt. Use 0,1,2 for the campaign-pair model.",
     )
     return parser.parse_args()
 

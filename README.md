@@ -1,116 +1,147 @@
-# ITDA_KJM YelpZip Review Abuse GNN
+# ITDA YelpZip Review Abuse GNN
 
-## 1. 현재 실행 기준
+이 폴더는 YelpZip 리뷰 데이터를 사용해 GNN 기반 조직적 어뷰징 리뷰 탐지 모델을 학습하고, 최종 제출 모델의 산출물을 검증할 수 있도록 정리한 코드 패키지입니다.
 
-현재 프로젝트에서 실제 실행 기준으로 사용하는 모델은 **기존 `topk15 window60 SAGE` 하나**이다.
+실행 목적은 세 가지로 구분합니다.
 
-```text
-data/graph_relflag_edge_t15_w60_thr075/graph_rur_custom2.pt
-experiments/relflag_edge_t15_w60_thr075_sage_inverse_seed42/
+1. **검증용 실행**: 이미 포함된 최종 산출물이 보고서의 수치와 일치하는지 확인합니다.
+2. **포함된 최종 그래프 기준 재학습**: 원천 데이터 전처리와 그래프 생성을 다시 하지 않고, 포함된 최종 그래프에서 모델만 다시 학습합니다.
+3. **원천 데이터부터 전체 재생성**: `data/origin/yelpzip.csv`에서 시작해 최종 그래프, 모델, 운영 threshold, 거버넌스 레이어까지 모두 다시 생성합니다.
+
+## 실행 환경
+
+기본 패키지는 `requirements.txt`에 정리되어 있습니다. 먼저 아래 명령으로 의존성을 설치합니다.
+
+```powershell
+pip install -r requirements.txt
 ```
 
-방향성 피처 적용 `topk15 window60 SAGE`의 리소스와 코드는 보존한다. 다만 이 모델은 현재 실행 모델이 아니라, 추후 설명 가능성 강화를 위해 다시 검토할 수 있는 후보이다. 기본 실행 스크립트와 실행 방법은 기존 `topk15 window60 SAGE`만 대상으로 한다.
+PyTorch와 PyTorch Geometric은 실행 환경의 CPU/CUDA/XPU 조건에 따라 설치 방식이 달라질 수 있습니다. `requirements.txt` 설치 중 PyTorch 계열 wheel 오류가 발생하면, 해당 평가 환경에 맞는 PyTorch와 PyTorch Geometric을 먼저 설치한 뒤 나머지 패키지를 설치하십시오.
 
-LightGBM node-only 모델과 stacking 보정 모델은 현재 범위에서 제거했다.
+## 최종 모델
 
-## 2. 필수 조건 준수 요약
+| 항목 | 값 |
+|---|---:|
+| 모델 | `relation_sage_mlp` |
+| 실험 폴더 | `experiments/campaign_quality_q60_relation_sage_mlp_equal_seed42` |
+| 그래프 | `data/graph_campaign_quality_q60_top3_b6000_s020/graph_rur_custom2.pt` |
+| 노드 | 26,701 |
+| 피처 차원 | 182 |
+| directed edge | 21,304 |
+| best epoch | 60 |
+| 운영 threshold | 0.794 |
 
-현재 실행 모델은 대회 필수 조건을 다음과 같이 만족한다.
+최종 모델은 relation-aware GraphSAGE와 Self Branch를 결합한 `relation_sage_mlp`입니다. 그래프 branch는 `R-U-R`, `Filtered Campaign Pair`, `Weak Product Shock` 세 relation을 따로 처리하고, Self Branch는 리뷰 자체 피처를 MLP로 직접 처리합니다. 따라서 연결된 리뷰는 관계별 이웃 정보를 활용하고, 연결이 부족한 리뷰는 자기 피처 기반 판단을 유지할 수 있습니다.
 
-| 필수 조건 | 현재 모델의 반영 |
-|---|---|
-| 샘플링 후 분할 | `data/sampled_relative_flags_q75_m2`를 먼저 생성한 뒤 `data/splits_relative_flags_q75_m2` mask를 생성 |
-| 무작위 추출 금지 | 단순 무작위 노드 추출이 아니라 `prod_id × week` 단위의 밀도 gate와 상대 변화량 flag로 샘플링 |
-| 1만~5만 노드 | 최종 샘플 노드 수 26,701개 |
-| train/valid 80%, test 20% | train 64%, valid 16%, test 20% |
-| 재현성 | split summary에 `method=temporal`, `random_state=42`, ratio 기록 |
-| 라벨 변환 | 원본 `label=-1`을 `is_fake=1`, `label=1`을 `is_fake=0`으로 변환 |
-| 리뷰 단위 노드 | 원본 리뷰 1행을 리뷰 노드 1개로 유지 |
-| GNN 핵심 사용 | plain GraphSAGE 사용 |
-| 기본 relation | R-U-R, edge type 0, 11,038 directed edges |
-| 커스텀 relation | weak product rating shock, edge type 2, 4,266 directed edges |
+## 최종 성능
 
-주의할 점은 R-U-R 엣지가 현재 `rur_temporal=false`로 생성되어 있다는 것이다. 필수 조건 자체는 동일 사용자 기반 R-U-R을 요구할 뿐 방향성을 요구하지 않으므로 미준수는 아니다. 다만 보고서에서 “과거에서 현재 방향으로만 연결한다”고 표현하면 실제 산출물과 맞지 않으므로, 현재 모델 설명에서는 “동일 사용자 리뷰를 날짜 기준 가까운 리뷰 중심으로 연결한다”고 서술해야 한다.
-
-## 3. 빠르게 결과 확인하기
-
-재학습 없이 저장된 결과를 보려면 다음 파일을 확인한다.
-
-```text
-experiments/relflag_edge_t15_w60_thr075_sage_inverse_seed42/metrics.json
-experiments/relflag_edge_t15_w60_thr075_sage_inverse_seed42/predictions_all.csv
-experiments/relflag_edge_t15_w60_thr075_sage_inverse_seed42/prediction_test.csv
-```
-
-현재 test 성능은 다음과 같다.
-
-| 모델 | PR-AUC | ROC-AUC | Macro F1 | Precision | Recall | Accuracy |
+| split | PR-AUC | ROC-AUC | Macro F1 | Precision | Recall | Accuracy |
 |---|---:|---:|---:|---:|---:|---:|
-| 기존 topk15 window60 SAGE | 0.4901 | 0.7851 | 0.6793 | 0.4956 | 0.4965 | 0.7839 |
+| valid | 0.4441 | 0.7850 | 0.6601 | 0.4690 | 0.4036 | 0.8106 |
+| test | 0.5288 | 0.8051 | 0.6962 | 0.5273 | 0.5149 | 0.7972 |
 
-## 4. 환경 확인
+PR-AUC와 ROC-AUC는 ranking 성능이며, Precision, Recall, Macro F1, Accuracy는 운영 threshold `0.794`를 적용한 결과입니다.
 
-현재 학습은 Intel XPU 사용을 기준으로 진행했다. 실행 전 PowerShell에서 다음 명령으로 XPU 사용 가능 여부를 확인한다.
+## 주요 relation
 
-```powershell
-C:\Users\LSH\Downloads\ITDA\.venv\Scripts\python.exe -c "import torch; print(torch.__version__); print(hasattr(torch, 'xpu') and torch.xpu.is_available())"
-```
+| relation | edge 수 | 의미 |
+|---|---:|---|
+| R-U-R | 11,038 | 동일 사용자의 가까운 리뷰 흐름 |
+| Filtered Campaign Pair | 6,000 | `prod_id x week x rating_direction` 단위의 캠페인성 리뷰 쌍 |
+| Weak Product Shock | 4,266 | 상품 과거 평점 흐름 대비 이례적인 평점 이동 |
 
-마지막 출력이 `True`이면 `--device xpu`로 학습할 수 있다. 단순 smoke test만 필요할 때는 `--device cpu`로 바꿀 수 있지만, 최종 재현 기준은 XPU이다.
+`Filtered Campaign Pair`는 q=0.60 기준으로 선별했습니다. 같은 상품과 같은 기간이라는 이유만으로 모든 리뷰를 묶지 않고, 신규 사용자 증가, 짧은 리뷰 증가, 리뷰 길이 하락, 평점 방향 집중이 함께 나타나는 경우를 중심으로 제한적으로 연결합니다.
 
-## 5. 현재 실행 모델 학습
-
-이미 `metrics.json`이 있으면 기본적으로 재학습하지 않는다. 현재 저장된 결과를 확인하면서 요약 파일만 만들려면 다음 명령을 사용한다.
-
-```powershell
-C:\Users\LSH\Downloads\ITDA\.venv\Scripts\python.exe .\RunExperiments.py --device xpu
-```
-
-실제로 다시 학습하려면 `--force`를 붙인다.
-
-```powershell
-C:\Users\LSH\Downloads\ITDA\.venv\Scripts\python.exe .\RunExperiments.py --device xpu --force
-```
-
-실행 후 다음 요약 파일이 생성된다.
+## 제출 폴더 구조
 
 ```text
-experiments/active_sage_model_summary.csv
-experiments/active_sage_model_summary.json
+ITDA/
+  README.md
+  requirements.txt
+  Preprocess.py
+  Sampling.py
+  MakeSplits.py
+  BuildTextEmbeddings.py
+  BuildEdges.py
+  BuildGraphDataset.py
+  TrainGNN.py
+  RunExperiments.py
+  ApplyOperatingThreshold.py
+  BuildGovernanceLayer.py
+  VerifyResults.py
+  GvncLayer_Report.md
+  data/
+    origin/
+      yelpzip.csv
+    processed_rur_shock_context/
+    sampled_relative_flags_q75_m2/
+    splits_relative_flags_q75_m2/
+    embeddings_relative_flags_q75_m2/
+    edges_campaign_quality_q60_top3_b6000_s020/
+    graph_campaign_quality_q60_top3_b6000_s020/
+    governance_layer/
+  experiments/
+    campaign_quality_q60_relation_sage_mlp_equal_seed42/
 ```
 
-## 6. 단독 학습 명령
+## 1. 검증용 실행
 
-`RunExperiments.py`를 거치지 않고 직접 학습하려면 다음 명령을 사용한다.
+이미 학습된 최종 모델 산출물이 포함되어 있으므로, 평가자는 아래 명령으로 핵심 산출물이 현행 최종 모델과 일치하는지 바로 확인할 수 있습니다.
 
 ```powershell
-C:\Users\LSH\Downloads\ITDA\.venv\Scripts\python.exe .\TrainGNN.py `
-  --graph-path .\data\graph_relflag_edge_t15_w60_thr075\graph_rur_custom2.pt `
-  --model sage `
-  --output-dir .\experiments\relflag_edge_t15_w60_thr075_sage_inverse_seed42 `
-  --hidden-dim 128 `
-  --num-layers 2 `
-  --dropout 0.5 `
-  --lr 0.001 `
-  --weight-decay 0.0001 `
-  --epochs 200 `
-  --patience 30 `
-  --seed 42 `
-  --device xpu `
-  --class-weight `
-  --mask-mode split `
-  --early-stop-metric valid_pr_auc `
-  --threshold-strategy prevalence_constrained_macro_f1
+python .\VerifyResults.py --strict
 ```
 
-## 7. 전체 파이프라인 재생성 순서
+이 명령은 재학습을 수행하지 않습니다. 전처리 행 수, 샘플 수, 그래프 구조, 최종 모델 설정, validation/test 성능, 주요 EDA 체크 값을 검증합니다.
 
-기존 산출물이 있으면 이 절을 실행할 필요가 없다. 샘플링부터 다시 만들 때만 아래 순서를 사용한다.
+## 2. 포함된 최종 그래프 기준 재학습
 
-### 7.1 샘플링
+원천 데이터 처리와 그래프 생성을 다시 하지 않고, 포함된 최종 그래프에서 모델만 재학습하려면 아래 순서로 실행합니다. `RunExperiments.py`는 최종 그래프 `data/graph_campaign_quality_q60_top3_b6000_s020/graph_rur_custom2.pt`와 최종 실험 폴더를 사용하도록 고정되어 있습니다.
 
 ```powershell
-C:\Users\LSH\Downloads\ITDA\.venv\Scripts\python.exe .\Sampling.py `
+python .\RunExperiments.py --device auto --force
+```
+
+학습이 끝난 뒤 운영 threshold `0.794`를 다시 적용합니다.
+
+```powershell
+python .\ApplyOperatingThreshold.py `
+  --experiment-dir .\experiments\campaign_quality_q60_relation_sage_mlp_equal_seed42 `
+  --threshold 0.794
+```
+
+스트림릿 대시보드에서 사용할 거버넌스 레이어 산출물을 다시 생성합니다.
+
+```powershell
+python .\BuildGovernanceLayer.py `
+  --output-dir .\data\governance_layer `
+  --experiment-dir .\experiments\campaign_quality_q60_relation_sage_mlp_equal_seed42 `
+  --graph-dir .\data\graph_campaign_quality_q60_top3_b6000_s020 `
+  --edge-dir .\data\edges_campaign_quality_q60_top3_b6000_s020
+```
+
+재학습 후 산출물 정합성을 확인하려면 다시 검증 명령을 실행합니다.
+
+```powershell
+python .\VerifyResults.py --strict
+```
+
+## 3. 원천 데이터부터 전체 재생성
+
+원천 데이터부터 최종 산출물을 모두 다시 만들려면 `data/origin/yelpzip.csv`가 필요합니다. 전체 재생성에서는 기본 출력 경로가 아니라, 현행 최종 모델에서 사용하는 active 경로를 명시해야 합니다.
+
+### 3-1. 전처리
+
+```powershell
+python .\Preprocess.py `
+  --csv .\data\origin\yelpzip.csv `
+  --output .\data\processed_rur_shock_context
+```
+
+### 3-2. 샘플링
+
+```powershell
+python .\Sampling.py `
   --processed-dir .\data\processed_rur_shock_context `
   --output-dir .\data\sampled_relative_flags_q75_m2 `
   --strategy legacy `
@@ -118,13 +149,14 @@ C:\Users\LSH\Downloads\ITDA\.venv\Scripts\python.exe .\Sampling.py `
   --flag-quantile 0.75 `
   --min-flags 2 `
   --min-reviews 10 `
-  --min-users 8
+  --min-users 8 `
+  --max-nodes 50000
 ```
 
-### 7.2 Split
+### 3-3. 시간 기준 split
 
 ```powershell
-C:\Users\LSH\Downloads\ITDA\.venv\Scripts\python.exe .\MakeSplits.py `
+python .\MakeSplits.py `
   --sampled-dir .\data\sampled_relative_flags_q75_m2 `
   --output-dir .\data\splits_relative_flags_q75_m2 `
   --method temporal `
@@ -134,83 +166,82 @@ C:\Users\LSH\Downloads\ITDA\.venv\Scripts\python.exe .\MakeSplits.py `
   --random-state 42
 ```
 
-### 7.3 텍스트 임베딩
+### 3-4. 텍스트 임베딩
 
 ```powershell
-C:\Users\LSH\Downloads\ITDA\.venv\Scripts\python.exe .\BuildTextEmbeddings.py `
+python .\BuildTextEmbeddings.py `
   --sampled-dir .\data\sampled_relative_flags_q75_m2 `
   --split-dir .\data\splits_relative_flags_q75_m2 `
   --output-dir .\data\embeddings_relative_flags_q75_m2 `
+  --max-features 50000 `
   --svd-dim 128 `
+  --min-df 2 `
+  --max-df 0.95 `
   --random-state 42
 ```
 
-### 7.4 엣지 생성
+### 3-5. relation edge 생성
 
 ```powershell
-C:\Users\LSH\Downloads\ITDA\.venv\Scripts\python.exe .\BuildEdges.py `
+python .\BuildEdges.py `
   --sampled-dir .\data\sampled_relative_flags_q75_m2 `
   --embedding-path .\data\embeddings_relative_flags_q75_m2\sampled_text_tfidf_svd.npy `
-  --output-dir .\data\edges_relflag_edge_t15_w60_thr075 `
-  --relation1-mode none `
+  --output-dir .\data\edges_campaign_quality_q60_top3_b6000_s020 `
+  --max-neighbors-per-node 5 `
+  --burst-min-group-size 3 `
+  --relation1-mode filtered_campaign_pair `
+  --train-mask-path .\data\splits_relative_flags_q75_m2\train_mask.npy `
+  --campaign-filter-comp-quantile 0.60 `
+  --campaign-filter-topk 3 `
+  --campaign-filter-budget-directed 6000 `
+  --campaign-filter-min-pair-score 0.20 `
+  --campaign-filter-min-group-size 3 `
   --custom2-edge-mode weak_product_shock `
   --shock-edge-style peer `
-  --shock-score-mode standardized `
+  --shock-max-prior-product-reviews 30 `
   --shock-min-abs-rating-dev 0.75 `
+  --shock-score-mode standardized `
   --shock-date-window-days 60 `
   --shock-topk 15 `
   --shock-exclude-neutral `
-  --max-neighbors-per-node 5
+  --shock-min-behavior-shift-score 0.0
 ```
 
-### 7.5 그래프 생성
+### 3-6. 최종 PyTorch Geometric 그래프 생성
 
 ```powershell
-C:\Users\LSH\Downloads\ITDA\.venv\Scripts\python.exe .\BuildGraphDataset.py `
+python .\BuildGraphDataset.py `
   --sampled-dir .\data\sampled_relative_flags_q75_m2 `
   --embedding-path .\data\embeddings_relative_flags_q75_m2\sampled_text_tfidf_svd.npy `
-  --edge-dir .\data\edges_relflag_edge_t15_w60_thr075 `
+  --edge-dir .\data\edges_campaign_quality_q60_top3_b6000_s020 `
   --split-dir .\data\splits_relative_flags_q75_m2 `
-  --output-dir .\data\graph_relflag_edge_t15_w60_thr075 `
+  --output-dir .\data\graph_campaign_quality_q60_top3_b6000_s020 `
+  --feature-profile legacy `
   --add-rating-history-text-features `
-  --add-product-prior-context-features
+  --add-product-prior-context-features `
+  --add-behavior-shift-features `
+  --add-campaign-quality-features `
+  --graph-keep-edge-types "0,1,2"
 ```
 
-## 8. 방향성 피처 후보의 위치
+### 3-7. 모델 학습, threshold 적용, 거버넌스 레이어 생성, 검증
 
-방향성 피처 적용 모델은 현재 실행 대상이 아니다. 관련 리소스는 아래 경로에 보존되어 있으며, 후속 연구에서 설명 가능성 강화 후보로만 다룬다.
+```powershell
+python .\RunExperiments.py --device auto --force
 
-```text
-data/graph_relflag_edge_t15_w60_eda_logic_directional/
-experiments/relflag_t15_w60_eda_logic_directional_sage_inverse_seed42/
-Modeling_Second.md
+python .\ApplyOperatingThreshold.py `
+  --experiment-dir .\experiments\campaign_quality_q60_relation_sage_mlp_equal_seed42 `
+  --threshold 0.794
+
+python .\BuildGovernanceLayer.py `
+  --output-dir .\data\governance_layer `
+  --experiment-dir .\experiments\campaign_quality_q60_relation_sage_mlp_equal_seed42 `
+  --graph-dir .\data\graph_campaign_quality_q60_top3_b6000_s020 `
+  --edge-dir .\data\edges_campaign_quality_q60_top3_b6000_s020
+
+python .\VerifyResults.py --strict
 ```
 
-## 9. 주요 문서
+## 데이터 누수 관리
 
-| 문서 | 내용 |
-|---|---|
-| `EDA_Report.md` | EDA 결과와 최종 모델 설계로 이어지는 논리 |
-| `Sampling_Report.md` | 최종 상대 변화량 flag 기반 샘플링 기준 |
-| `Modeling_Report.md` | 기존 topk15 window60 SAGE 기준 모델 |
-| `Modeling_Second.md` | 방향성 피처 적용 후보와 기준 모델의 차이 |
-| `Run_Topk15_Window60_SAGE.md` | 기존 topk15 window60 SAGE 단독 실행 안내 |
-
-## 10. 현재 남긴 산출물
-
-현재 실행 모델과 후보 보존에 필요한 주요 산출물은 다음과 같다.
-
-```text
-data/origin/
-data/eda/
-data/processed/
-data/processed_rur_shock_context/
-data/sampled_relative_flags_q75_m2/
-data/splits_relative_flags_q75_m2/
-data/embeddings_relative_flags_q75_m2/
-data/edges_relflag_edge_t15_w60_thr075/
-data/graph_relflag_edge_t15_w60_thr075/
-data/graph_relflag_edge_t15_w60_eda_logic_directional/
-experiments/relflag_edge_t15_w60_thr075_sage_inverse_seed42/
-experiments/relflag_t15_w60_eda_logic_directional_sage_inverse_seed42/
-```
+라벨, 원본 `tag`, 전체 기간 Fake Rate, 미래 리뷰 수는 입력 피처나 엣지 생성 기준에 사용하지 않습니다. TF-IDF/SVD, scaler, threshold 및 Filtered Campaign Pair의 주요 기준은 train/validation 기준으로만 선택하며, test split은 최종 일반화 성능 확인에만 사용합니다.

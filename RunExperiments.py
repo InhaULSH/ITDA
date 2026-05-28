@@ -1,22 +1,14 @@
-"""
-Run the active topk15 window60 SAGE model only.
-
-Direction-aware topk15 resources are intentionally kept in the workspace as a
-future candidate, but they are not part of the default execution path.
-"""
+"""Run the active validation-best campaign-quality RelationSAGE-MLP model only."""
 
 from __future__ import annotations
 
 import argparse
+import csv
 import json
-import math
 import subprocess
 import sys
 from pathlib import Path
 from typing import Any
-
-import numpy as np
-import pandas as pd
 
 
 if hasattr(sys.stdout, "reconfigure"):
@@ -29,28 +21,28 @@ PROJECT_DIR = Path(__file__).resolve().parent
 EXPERIMENTS_DIR = PROJECT_DIR / "experiments"
 TRAIN_SCRIPT = PROJECT_DIR / "TrainGNN.py"
 ACTIVE_EXPERIMENT = {
-    "name": "relflag_edge_t15_w60_thr075_sage_inverse_seed42",
-    "graph": PROJECT_DIR / "data" / "graph_relflag_edge_t15_w60_thr075" / "graph_rur_custom2.pt",
-    "note": "active topk15 window60 SAGE model",
+    "name": "campaign_quality_q60_relation_sage_mlp_equal_seed42",
+    "graph": PROJECT_DIR / "data" / "graph_campaign_quality_q60_top3_b6000_s020" / "graph_rur_custom2.pt",
+    "note": "active validation-best q60 campaign-quality relation-aware Self Branch SAGE model",
 }
 
 COMMON_ARGS = [
     "--model",
-    "sage",
+    "relation_sage_mlp",
     "--hidden-dim",
     "128",
     "--num-layers",
     "2",
     "--dropout",
-    "0.5",
+    "0.55",
     "--lr",
     "0.001",
     "--weight-decay",
     "0.0001",
     "--epochs",
-    "200",
+    "180",
     "--patience",
-    "30",
+    "25",
     "--seed",
     "42",
     "--class-weight",
@@ -60,6 +52,10 @@ COMMON_ARGS = [
     "valid_pr_auc",
     "--threshold-strategy",
     "prevalence_constrained_macro_f1",
+    "--relation-aggregation",
+    "equal",
+    "--relation-dropout",
+    "0.0",
 ]
 
 SUMMARY_COLUMNS = [
@@ -96,14 +92,6 @@ def json_safe(value: Any) -> Any:
         return {str(k): json_safe(v) for k, v in value.items()}
     if isinstance(value, (list, tuple)):
         return [json_safe(v) for v in value]
-    if isinstance(value, np.ndarray):
-        return [json_safe(v) for v in value.tolist()]
-    if isinstance(value, np.integer):
-        return int(value)
-    if isinstance(value, np.floating):
-        return None if np.isnan(value) else float(value)
-    if isinstance(value, float) and math.isnan(value):
-        return None
     return value
 
 
@@ -155,10 +143,13 @@ def read_metrics_row(output_dir: Path, status: str) -> dict[str, Any]:
 
 def save_summary(row: dict[str, Any]) -> None:
     EXPERIMENTS_DIR.mkdir(parents=True, exist_ok=True)
-    df = pd.DataFrame([row])[SUMMARY_COLUMNS]
-    df.to_csv(EXPERIMENTS_DIR / "active_sage_model_summary.csv", index=False, encoding="utf-8")
-    (EXPERIMENTS_DIR / "active_sage_model_summary.json").write_text(
-        json.dumps(json_safe(df.to_dict("records")), ensure_ascii=False, indent=2),
+    csv_path = EXPERIMENTS_DIR / "active_campaign_quality_relation_sage_mlp_summary.csv"
+    with csv_path.open("w", encoding="utf-8", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=SUMMARY_COLUMNS)
+        writer.writeheader()
+        writer.writerow({col: row.get(col) for col in SUMMARY_COLUMNS})
+    (EXPERIMENTS_DIR / "active_campaign_quality_relation_sage_mlp_summary.json").write_text(
+        json.dumps([json_safe({col: row.get(col) for col in SUMMARY_COLUMNS})], ensure_ascii=False, indent=2),
         encoding="utf-8",
     )
 
@@ -195,9 +186,11 @@ def run(args: argparse.Namespace) -> None:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Run the active topk15 window60 SAGE model only.")
+    parser = argparse.ArgumentParser(
+        description="Run the active validation-best campaign-quality RelationSAGE-MLP model only."
+    )
     parser.add_argument("--python", default=sys.executable, help="Python executable used to run TrainGNN.py")
-    parser.add_argument("--device", default="xpu", help="Device passed to TrainGNN.py")
+    parser.add_argument("--device", default="auto", help="Device passed to TrainGNN.py")
     parser.add_argument("--force", action="store_true", help="Retrain even when metrics.json already exists")
     parser.add_argument("--dry-run", action="store_true", help="Print command without running")
     return parser.parse_args()

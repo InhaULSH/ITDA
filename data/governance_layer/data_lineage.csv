@@ -1,0 +1,10 @@
+stage_order,stage,artifact,description
+1,raw_data,data/origin/yelpzip.csv,Original YelpZip review table.
+2,preprocess,data/processed_rur_shock_context/,Review-node preprocessing and leakage-safe metadata construction.
+3,sampling,data/sampled_relative_flags_q75_m2/,Connected sampled review subgraph artifacts.
+4,split,data/splits_relative_flags_q75_m2/,Train/validation/test masks.
+5,text_embedding,data/embeddings_relative_flags_q75_m2/,TF-IDF/SVD text embedding artifacts.
+6,edge_building,data/edges_campaign_quality_q60_top3_b6000_s020,"R-U-R, Filtered Campaign Pair, and Weak Product Shock edges."
+7,graph_building,data/graph_campaign_quality_q60_top3_b6000_s020,PyG graph with numeric and text features.
+8,training,experiments/campaign_quality_q60_relation_sage_mlp_equal_seed42,Validation-best relation_sage_mlp model and predictions.
+9,governance,data/governance_layer,Governance layer consumed by the Streamlit dashboard.

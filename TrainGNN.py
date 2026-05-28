@@ -194,6 +194,36 @@ def build_gnn_class(nn: Any, F: Any, conv_cls: Any) -> type:
     return ConvNet
 
 
+def build_sage_self_branch_class(torch: Any, nn: Any, F: Any, SAGEConv: Any) -> type:
+    class SageSelfBranchNet(nn.Module):
+        def __init__(self, in_dim: int, hidden_dim: int, num_layers: int, dropout: float) -> None:
+            super().__init__()
+            if num_layers < 1:
+                raise ValueError("num_layers must be at least 1.")
+            self.self_mlp = nn.Sequential(
+                nn.Linear(in_dim, hidden_dim),
+                nn.ReLU(),
+                nn.Dropout(dropout),
+                nn.Linear(hidden_dim, hidden_dim),
+                nn.ReLU(),
+            )
+            self.graph_convs = nn.ModuleList([SAGEConv(in_dim, hidden_dim)])
+            for _ in range(num_layers - 1):
+                self.graph_convs.append(SAGEConv(hidden_dim, hidden_dim))
+            self.classifier = nn.Linear(hidden_dim * 2, 2)
+            self.dropout = dropout
+
+        def forward(self, data: Any) -> Any:
+            self_hidden = self.self_mlp(data.x)
+            graph_hidden = data.x
+            for conv in self.graph_convs:
+                graph_hidden = F.relu(conv(graph_hidden, data.edge_index))
+                graph_hidden = F.dropout(graph_hidden, p=self.dropout, training=self.training)
+            return self.classifier(torch.cat([self_hidden, graph_hidden], dim=1))
+
+    return SageSelfBranchNet
+
+
 def build_gat_class(nn: Any, F: Any, GATConv: Any, heads: int = 4) -> type:
     class GATNet(nn.Module):
         def __init__(self, in_dim: int, hidden_dim: int, num_layers: int, dropout: float) -> None:
@@ -464,6 +494,8 @@ def create_model(imports: dict[str, Any], data: Any, args: argparse.Namespace) -
         model_cls = build_gnn_class(nn, F, imports["GCNConv"])
     elif args.model == "sage":
         model_cls = build_gnn_class(nn, F, imports["SAGEConv"])
+    elif args.model == "sage_self_branch":
+        model_cls = build_sage_self_branch_class(torch, nn, F, imports["SAGEConv"])
     elif args.model == "relation_sage":
         if not hasattr(data, "edge_type"):
             raise ValueError("relation_sage requires data.edge_type, but this graph does not contain edge_type.")
@@ -882,7 +914,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--graph-path", type=Path, default=DEFAULT_GRAPH_PATH, help="Path to PyG graph .pt file")
     parser.add_argument(
         "--model",
-        choices=["mlp", "gcn", "sage", "gat", "rgcn", "relation_sage", "relation_sage_mlp"],
+        choices=["mlp", "gcn", "sage", "sage_self_branch", "gat", "rgcn", "relation_sage", "relation_sage_mlp"],
         required=True,
         help="Model type",
     )

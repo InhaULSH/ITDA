@@ -1,0 +1,4 @@
+edge_type,relation,directed_edges,undirected_edges
+0,R-U-R,11038,5519
+1,filtered_campaign_pair,6000,3553
+2,weak_product_rating_shock_edge,4266,2133

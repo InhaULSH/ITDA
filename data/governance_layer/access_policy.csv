@@ -1,0 +1,4 @@
+role,can_view_metrics,can_view_eval_only,can_change_threshold,can_export,notes
+viewer,True,False,False,False,Presentation or read-only business user.
+reviewer,True,False,False,True,Operational reviewer; can export governance-safe summaries.
+admin,True,True,True,True,Can approve threshold changes and view evaluation-only fields.

@@ -1,0 +1,80 @@
+{
+  "model": "relation_sage_mlp",
+  "best_epoch": 60,
+  "best_valid_metric": 0.4441336701873743,
+  "early_stop_metric": "valid_pr_auc",
+  "threshold_selection": "prevalence_constrained_macro_f1",
+  "mask_mode": "split",
+  "mask_summary": {
+    "train": {
+      "nodes": 17088,
+      "fake": 2372,
+      "real": 14716,
+      "fake_rate": 0.13881086142322097
+    },
+    "valid": {
+      "nodes": 4272,
+      "fake": 768,
+      "real": 3504,
+      "fake_rate": 0.1797752808988764
+    },
+    "test": {
+      "nodes": 5341,
+      "fake": 1144,
+      "real": 4197,
+      "fake_rate": 0.21419209885789178
+    }
+  },
+  "loss_weighting": "inverse_frequency",
+  "class_balanced_beta": null,
+  "best_threshold": 0.794,
+  "train_metrics": {
+    "pr_auc": 0.6220520667172754,
+    "roc_auc": 0.9101729822698172,
+    "macro_f1": 0.74427570590175,
+    "precision": 0.6430180180180181,
+    "recall": 0.4814502529510961,
+    "accuracy": 0.8909176029962547,
+    "tn": 14082,
+    "fp": 634,
+    "fn": 1230,
+    "tp": 1142,
+    "threshold": 0.794
+  },
+  "valid_metrics": {
+    "pr_auc": 0.4441336701873743,
+    "roc_auc": 0.7850414258704338,
+    "macro_f1": 0.6600831978094555,
+    "precision": 0.4689863842662632,
+    "recall": 0.4036458333333333,
+    "accuracy": 0.81062734082397,
+    "tn": 3153,
+    "fp": 351,
+    "fn": 458,
+    "tp": 310,
+    "threshold": 0.794
+  },
+  "test_metrics": {
+    "pr_auc": 0.5288475351597811,
+    "roc_auc": 0.8051183537691758,
+    "macro_f1": 0.6962006747836291,
+    "precision": 0.5273052820053715,
+    "recall": 0.5148601398601399,
+    "accuracy": 0.7972289833364539,
+    "tn": 3669,
+    "fp": 528,
+    "fn": 555,
+    "tp": 589,
+    "threshold": 0.794
+  },
+  "relation_aggregation": "equal",
+  "relation_dropout": 0.0,
+  "relation_edge_counts": {
+    "0": 11038,
+    "1": 6000,
+    "2": 4266
+  },
+  "validation_selected_threshold": 0.78,
+  "operating_threshold": 0.794,
+  "operating_threshold_note": "Fixed post-training operating threshold chosen from validation-side precision-first threshold review. It does not change the trained model weights."
+}

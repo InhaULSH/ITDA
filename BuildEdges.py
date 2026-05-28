@@ -39,6 +39,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 DEFAULT_SAMPLED_DIR = PROJECT_DIR / "data" / "sampled"
 DEFAULT_EMBEDDING_PATH = PROJECT_DIR / "data" / "embeddings" / "sampled_text_tfidf_svd.npy"
 DEFAULT_OUTPUT_DIR = PROJECT_DIR / "data" / "edges"
+DEFAULT_TRAIN_MASK_PATH = PROJECT_DIR / "data" / "splits_relative_flags_q75_m2" / "train_mask.npy"
 
 RELATION_NAMES = {
     0: "R-U-R",
@@ -49,6 +50,7 @@ RELATION_NAMES = {
 RELATION1_NAMES = {
     "burst": "product_time_rating_burst",
     "product_prior_context": "product_prior_context",
+    "filtered_campaign_pair": "filtered_campaign_pair",
     "none": "disabled_relation_1",
 }
 
@@ -384,6 +386,207 @@ def build_product_prior_context_edges(
                 if len(edge_sets[1]) > before:
                     stats["product_context_edges_directed"] += 1
 
+    return stats
+
+
+CAMPAIGN_COMPONENT_COLUMNS = [
+    "new_user_ratio_lift_4w",
+    "short_review_ratio_lift_4w",
+    "word_len_drop_ratio_4w",
+    "direction_concentration_lift_4w",
+]
+
+
+def load_optional_train_mask(train_mask_path: Path | None, n_nodes: int) -> tuple[np.ndarray, str | None]:
+    if train_mask_path is None or not train_mask_path.exists():
+        return np.ones(n_nodes, dtype=bool), None
+    train_mask = np.load(train_mask_path)
+    if train_mask.dtype != bool or train_mask.shape != (n_nodes,):
+        raise ValueError(
+            f"Train mask must be bool with shape ({n_nodes},), got {train_mask.dtype}, {train_mask.shape}."
+        )
+    return train_mask, path_for_summary(train_mask_path)
+
+
+def numeric_node_values(nodes: pd.DataFrame, column: str, default: float = 0.0) -> np.ndarray:
+    if column not in nodes.columns:
+        return np.full(len(nodes), float(default), dtype=np.float32)
+    values = pd.to_numeric(nodes[column], errors="coerce").fillna(default).to_numpy(dtype=np.float32)
+    return np.nan_to_num(values, nan=float(default), posinf=float(default), neginf=float(default)).astype(np.float32)
+
+
+def build_filtered_campaign_pair_edges(
+    nodes: pd.DataFrame,
+    embeddings: np.ndarray,
+    edge_sets: dict[int, set[tuple[int, int]]],
+    train_mask: np.ndarray,
+    comp_quantile: float,
+    topk: int,
+    budget_directed: int,
+    min_pair_score: float,
+    min_group_size: int,
+    train_mask_source: str | None,
+) -> dict[str, Any]:
+    log("Building relation 1: filtered_campaign_pair edges.")
+    if not 0 <= comp_quantile <= 1:
+        raise ValueError(f"--campaign-filter-comp-quantile must be in [0, 1], got {comp_quantile}.")
+    if topk <= 0:
+        raise ValueError(f"--campaign-filter-topk must be positive, got {topk}.")
+    if budget_directed < 0:
+        raise ValueError(f"--campaign-filter-budget-directed must be non-negative, got {budget_directed}.")
+    if not 0 <= min_pair_score <= 1:
+        raise ValueError(f"--campaign-filter-min-pair-score must be in [0, 1], got {min_pair_score}.")
+    if min_group_size < 2:
+        raise ValueError(f"--campaign-filter-min-group-size must be at least 2, got {min_group_size}.")
+
+    required = [
+        "sampled_node_idx",
+        "prod_id",
+        "week",
+        "date",
+        "rating_direction",
+        "is_new_user_at_review_time",
+        "short_review_flag",
+        "rating_deviation_from_prior_product_mean",
+        *CAMPAIGN_COMPONENT_COLUMNS,
+    ]
+    missing = [column for column in required if column not in nodes.columns]
+    if missing:
+        raise ValueError(f"Cannot build filtered_campaign_pair edges; sampled nodes are missing: {missing}")
+
+    stats: dict[str, Any] = {
+        "campaign_filter_train_mask": train_mask_source or "all_nodes_fallback",
+        "campaign_filter_comp_quantile": float(comp_quantile),
+        "campaign_filter_topk": int(topk),
+        "campaign_filter_budget_directed": int(budget_directed),
+        "campaign_filter_min_pair_score": float(min_pair_score),
+        "campaign_filter_min_group_size": int(min_group_size),
+        "campaign_filter_comp_threshold": None,
+        "campaign_filter_comp_q90": None,
+        "campaign_filter_groups_considered": 0,
+        "campaign_filter_groups_passing": 0,
+        "campaign_filter_candidate_directed_after_topk": 0,
+        "campaign_filter_added_directed_edges": 0,
+        "campaign_filter_skipped_existing_pairs": 0,
+        "campaign_filter_edges_by_rating_direction": {"-1": 0, "1": 0},
+        "campaign_filter_score_mean": None,
+        "campaign_filter_score_min": None,
+        "campaign_filter_score_max": None,
+    }
+    if budget_directed == 0:
+        return stats
+
+    work = nodes.copy()
+    component_matrix = np.column_stack(
+        [np.maximum(numeric_node_values(work, column), 0.0) for column in CAMPAIGN_COMPONENT_COLUMNS]
+    ).astype(np.float32)
+    component_score = np.sum(component_matrix, axis=1).astype(np.float32)
+    train_component = component_score[train_mask]
+    train_component = train_component[np.isfinite(train_component)]
+    if train_component.size == 0:
+        comp_threshold = 0.0
+        comp_q90 = 1.0
+    else:
+        comp_threshold = float(np.quantile(train_component, comp_quantile))
+        comp_q90 = float(np.quantile(train_component, 0.90))
+    comp_q90 = max(comp_q90, comp_threshold, 1e-6)
+    stats["campaign_filter_comp_threshold"] = comp_threshold
+    stats["campaign_filter_comp_q90"] = comp_q90
+    work["_campaign_component_score"] = component_score
+
+    rating_dev = numeric_node_values(work, "rating_deviation_from_prior_product_mean")
+    if "prior_product_rating_std" in work.columns:
+        rating_std = pd.to_numeric(work["prior_product_rating_std"], errors="coerce")
+        positive_train_std = rating_std.loc[train_mask & rating_std.gt(0)]
+        std_floor = float(positive_train_std.quantile(0.25)) if not positive_train_std.empty else 1.0
+    else:
+        rating_std = pd.Series(np.nan, index=work.index)
+        std_floor = 1.0
+    std_floor = max(std_floor, 1e-6)
+    rating_scale = rating_std.fillna(std_floor).clip(lower=std_floor).to_numpy(dtype=np.float32)
+    standardized_abs_dev = np.clip(np.abs(rating_dev) / rating_scale, 0.0, 3.0) / 3.0
+
+    new_user = np.clip(numeric_node_values(work, "is_new_user_at_review_time"), 0.0, 1.0)
+    short_review = np.clip(numeric_node_values(work, "short_review_flag"), 0.0, 1.0)
+
+    text_matrix = np.asarray(embeddings, dtype=np.float32)
+    norms = np.linalg.norm(text_matrix, axis=1, keepdims=True)
+    text_matrix = np.divide(text_matrix, np.maximum(norms, 1e-12), out=np.zeros_like(text_matrix), where=norms > 0)
+
+    existing_pairs: set[tuple[int, int]] = set()
+    for pairs in edge_sets.values():
+        existing_pairs.update(pairs)
+
+    candidate_rows: list[tuple[float, int, int, int]] = []
+    score_values: list[float] = []
+    group_columns = ["prod_id", "week", "rating_direction"]
+    for (_, _, rating_direction), group in work.groupby(group_columns, sort=False, observed=True):
+        direction = int(rating_direction)
+        if direction == 0 or len(group) < min_group_size:
+            continue
+        stats["campaign_filter_groups_considered"] += 1
+        group_component_mean = float(group["_campaign_component_score"].mean())
+        if group_component_mean < comp_threshold:
+            continue
+        stats["campaign_filter_groups_passing"] += 1
+
+        ordered = group.sort_values(["date", "sampled_node_idx"])
+        node_ids = ordered["sampled_node_idx"].to_numpy(dtype=np.int64)
+        local_text = text_matrix[node_ids]
+        similarity = np.clip(local_text @ local_text.T, -1.0, 1.0)
+        np.fill_diagonal(similarity, -np.inf)
+        similarity = (similarity + 1.0) / 2.0
+        dates = ordered["date"].to_numpy(dtype="datetime64[ns]")
+
+        for row_idx, src in enumerate(node_ids):
+            src = int(src)
+            target_positions = np.flatnonzero(np.isfinite(similarity[row_idx]))
+            if len(target_positions) == 0:
+                continue
+            dst_ids = node_ids[target_positions]
+            existing_mask = np.array([(src, int(dst)) in existing_pairs for dst in dst_ids], dtype=bool)
+            stats["campaign_filter_skipped_existing_pairs"] += int(existing_mask.sum())
+            target_positions = target_positions[~existing_mask]
+            if len(target_positions) == 0:
+                continue
+
+            pair_quality = np.minimum(component_score[src], component_score[node_ids[target_positions]]) / comp_q90
+            pair_quality = np.clip(pair_quality, 0.0, 1.0)
+            scores = (
+                0.35 * similarity[row_idx, target_positions]
+                + 0.16 * np.minimum(new_user[src], new_user[node_ids[target_positions]])
+                + 0.14 * np.minimum(short_review[src], short_review[node_ids[target_positions]])
+                + 0.20 * np.minimum(standardized_abs_dev[src], standardized_abs_dev[node_ids[target_positions]])
+                + 0.15 * pair_quality
+            )
+            keep = scores >= float(min_pair_score)
+            if not np.any(keep):
+                continue
+            target_positions = target_positions[keep]
+            scores = scores[keep]
+            date_diff = np.abs(dates[target_positions] - dates[row_idx]).astype("timedelta64[D]").astype(np.int64)
+            ordered_candidates = np.lexsort((node_ids[target_positions], date_diff, -scores))[:topk]
+            for pos in ordered_candidates:
+                dst = int(node_ids[target_positions[pos]])
+                score = float(scores[pos])
+                candidate_rows.append((score, src, dst, direction))
+                score_values.append(score)
+
+    stats["campaign_filter_candidate_directed_after_topk"] = int(len(candidate_rows))
+    candidate_rows.sort(key=lambda item: (-item[0], item[1], item[2]))
+    for score, src, dst, direction in candidate_rows:
+        if stats["campaign_filter_added_directed_edges"] >= budget_directed:
+            break
+        before = len(edge_sets[1])
+        add_directed_pair(edge_sets, 1, src, dst)
+        if len(edge_sets[1]) > before:
+            stats["campaign_filter_added_directed_edges"] += 1
+            stats["campaign_filter_edges_by_rating_direction"][str(direction)] += 1
+
+    if score_values:
+        stats["campaign_filter_score_mean"] = float(np.mean(score_values))
+        stats["campaign_filter_score_min"] = float(np.min(score_values))
+        stats["campaign_filter_score_max"] = float(np.max(score_values))
     return stats
 
 
@@ -1044,12 +1247,13 @@ def build_edge_arrays(edge_sets: dict[int, set[tuple[int, int]]], n_nodes: int) 
     count_rows: list[dict[str, Any]] = []
     for relation_type in sorted(RELATION_NAMES):
         pairs = sorted(edge_sets[relation_type])
+        undirected_pairs = {tuple(sorted((int(src), int(dst)))) for src, dst in pairs if int(src) != int(dst)}
         count_rows.append(
             {
                 "edge_type": relation_type,
                 "relation": RELATION_NAMES[relation_type],
                 "directed_edges": len(pairs),
-                "undirected_edges": len(pairs) // 2,
+                "undirected_edges": len(undirected_pairs),
             }
         )
         rows.extend((src, dst, relation_type) for src, dst in pairs)
@@ -1099,6 +1303,7 @@ def relation_stats(edge_sets: dict[int, set[tuple[int, int]]], n_nodes: int) -> 
     summary: dict[str, dict[str, Any]] = {}
     for relation_type, relation_name in RELATION_NAMES.items():
         pairs = edge_sets[relation_type]
+        undirected_pairs = {tuple(sorted((int(src), int(dst)))) for src, dst in pairs if int(src) != int(dst)}
         degree = np.zeros(n_nodes, dtype=np.int64)
         for src, dst in pairs:
             degree[src] += 1
@@ -1106,7 +1311,7 @@ def relation_stats(edge_sets: dict[int, set[tuple[int, int]]], n_nodes: int) -> 
         summary[str(relation_type)] = {
             "relation": relation_name,
             "directed_edges": int(len(pairs)),
-            "undirected_edges": int(len(pairs) // 2),
+            "undirected_edges": int(len(undirected_pairs)),
             "mean_degree": float(degree.mean()),
             "isolated_nodes": int(np.sum(degree == 0)),
         }
@@ -1125,6 +1330,7 @@ def save_outputs(
     text_relation_stats: dict[str, Any],
     cold_start_stats: dict[str, Any],
     shock_stats: dict[str, Any],
+    campaign_pair_stats: dict[str, Any],
     context_edge_stats: dict[str, Any],
     args: argparse.Namespace,
 ) -> None:
@@ -1144,12 +1350,13 @@ def save_outputs(
 
     parquet_saved = False
     parquet_error = None
-    try:
-        edge_df.to_parquet(parquet_path, index=False)
-        parquet_saved = True
-    except Exception as exc:
-        parquet_error = str(exc)
-        log(f"Could not save parquet; saved CSV instead. Reason: {parquet_error}")
+    if args.save_edges_parquet:
+        try:
+            edge_df.to_parquet(parquet_path, index=False)
+            parquet_saved = True
+        except Exception as exc:
+            parquet_error = str(exc)
+            log(f"Could not save parquet; saved CSV instead. Reason: {parquet_error}")
 
     total_degree = np.zeros(n_nodes, dtype=np.int64)
     for src in edge_index[0]:
@@ -1160,7 +1367,7 @@ def save_outputs(
     summary = {
         "n_nodes": int(n_nodes),
         "total_directed_edges": int(edge_index.shape[1]),
-        "total_undirected_edges": int(edge_index.shape[1] // 2),
+        "total_undirected_edges": int(sum(row["undirected_edges"] for row in relation_summary.values())),
         "edge_index_shape": [int(edge_index.shape[0]), int(edge_index.shape[1])],
         "edge_type_shape": [int(edge_type.shape[0])],
         "relation_stats": relation_summary,
@@ -1219,6 +1426,13 @@ def save_outputs(
         "shock_filtered_same_product_week_pairs": int(
             shock_stats.get("shock_filtered_same_product_week_pairs", 0)
         ),
+        "campaign_filter_edges_directed": int(relation_summary["1"]["directed_edges"])
+        if args.relation1_mode == "filtered_campaign_pair"
+        else 0,
+        "campaign_filter_candidate_directed_after_topk": int(
+            campaign_pair_stats.get("campaign_filter_candidate_directed_after_topk", 0)
+        ),
+        "campaign_filter_comp_threshold": campaign_pair_stats.get("campaign_filter_comp_threshold"),
         "overall_mean_degree": float(total_degree.mean()),
         "overall_isolated_nodes": int(np.sum(total_degree == 0)),
         "duplicate_pairs_removed_across_relations": int(duplicate_pairs_removed),
@@ -1230,6 +1444,12 @@ def save_outputs(
             "relation1_mode": args.relation1_mode,
             "product_context_topk": int(args.product_context_topk),
             "product_context_exclude_same_week": bool(args.product_context_exclude_same_week),
+            "campaign_filter_train_mask": campaign_pair_stats.get("campaign_filter_train_mask"),
+            "campaign_filter_comp_quantile": float(args.campaign_filter_comp_quantile),
+            "campaign_filter_topk": int(args.campaign_filter_topk),
+            "campaign_filter_budget_directed": int(args.campaign_filter_budget_directed),
+            "campaign_filter_min_pair_score": float(args.campaign_filter_min_pair_score),
+            "campaign_filter_min_group_size": int(args.campaign_filter_min_group_size),
             "rur_temporal": bool(args.rur_temporal),
             "rur_temporal_mode": args.rur_temporal_mode,
             "custom2_edge_mode": args.custom2_edge_mode,
@@ -1266,6 +1486,45 @@ def save_outputs(
             "product_context_edges_directed": int(relation_summary["1"]["directed_edges"])
             if args.relation1_mode == "product_prior_context"
             else 0,
+        },
+        "filtered_campaign_pair_relation": {
+            "relation1_mode": args.relation1_mode,
+            "campaign_filter_train_mask": campaign_pair_stats.get("campaign_filter_train_mask"),
+            "campaign_filter_comp_quantile": float(args.campaign_filter_comp_quantile),
+            "campaign_filter_comp_threshold": campaign_pair_stats.get("campaign_filter_comp_threshold"),
+            "campaign_filter_comp_q90": campaign_pair_stats.get("campaign_filter_comp_q90"),
+            "campaign_filter_topk": int(args.campaign_filter_topk),
+            "campaign_filter_budget_directed": int(args.campaign_filter_budget_directed),
+            "campaign_filter_min_pair_score": float(args.campaign_filter_min_pair_score),
+            "campaign_filter_min_group_size": int(args.campaign_filter_min_group_size),
+            "campaign_filter_groups_considered": int(campaign_pair_stats.get("campaign_filter_groups_considered", 0)),
+            "campaign_filter_groups_passing": int(campaign_pair_stats.get("campaign_filter_groups_passing", 0)),
+            "campaign_filter_candidate_directed_after_topk": int(
+                campaign_pair_stats.get("campaign_filter_candidate_directed_after_topk", 0)
+            ),
+            "campaign_filter_added_directed_edges_before_collapse": int(
+                campaign_pair_stats.get("campaign_filter_added_directed_edges", 0)
+            ),
+            "campaign_filter_edges_directed_after_collapse": int(relation_summary["1"]["directed_edges"])
+            if args.relation1_mode == "filtered_campaign_pair"
+            else 0,
+            "campaign_filter_skipped_existing_pairs": int(
+                campaign_pair_stats.get("campaign_filter_skipped_existing_pairs", 0)
+            ),
+            "campaign_filter_edges_by_rating_direction": campaign_pair_stats.get(
+                "campaign_filter_edges_by_rating_direction", {"-1": 0, "1": 0}
+            ),
+            "campaign_filter_score_mean": campaign_pair_stats.get("campaign_filter_score_mean"),
+            "campaign_filter_score_min": campaign_pair_stats.get("campaign_filter_score_min"),
+            "campaign_filter_score_max": campaign_pair_stats.get("campaign_filter_score_max"),
+            "component_columns": CAMPAIGN_COMPONENT_COLUMNS,
+            "pair_score_weights": {
+                "text_cosine_0_to_1": 0.35,
+                "both_new_user": 0.16,
+                "both_short_review": 0.14,
+                "both_standardized_product_rating_deviation": 0.20,
+                "campaign_quality_bonus": 0.15,
+            },
         },
         "text_relation": {
             "text_edge_mode": args.text_edge_mode,
@@ -1443,6 +1702,13 @@ def run_build_edges(args: argparse.Namespace) -> None:
         "shock_filtered_same_user_pairs": 0,
         "shock_filtered_same_product_week_pairs": 0,
     }
+    train_mask, train_mask_source = load_optional_train_mask(args.train_mask_path, n_nodes)
+    campaign_pair_stats: dict[str, Any] = {
+        "campaign_filter_train_mask": train_mask_source or "all_nodes_fallback",
+        "campaign_filter_candidate_directed_after_topk": 0,
+        "campaign_filter_added_directed_edges": 0,
+        "campaign_filter_comp_threshold": None,
+    }
 
     if args.use_sampled_context_edges:
         pass
@@ -1504,6 +1770,20 @@ def run_build_edges(args: argparse.Namespace) -> None:
         else:
             raise ValueError(f"Unsupported --shock-edge-style: {args.shock_edge_style}")
 
+    if (not args.use_sampled_context_edges) and args.relation1_mode == "filtered_campaign_pair":
+        campaign_pair_stats = build_filtered_campaign_pair_edges(
+            nodes,
+            embeddings,
+            edge_sets,
+            train_mask,
+            args.campaign_filter_comp_quantile,
+            args.campaign_filter_topk,
+            args.campaign_filter_budget_directed,
+            args.campaign_filter_min_pair_score,
+            args.campaign_filter_min_group_size,
+            train_mask_source,
+        )
+
     edge_sets, duplicate_pairs_removed = collapse_duplicate_pairs_across_relations(edge_sets)
     relation_summary = relation_stats(edge_sets, n_nodes)
     edge_index, edge_type, relation_counts, edge_df = build_edge_arrays(edge_sets, n_nodes)
@@ -1519,6 +1799,7 @@ def run_build_edges(args: argparse.Namespace) -> None:
         text_relation_stats,
         cold_start_stats,
         shock_stats,
+        campaign_pair_stats,
         context_edge_stats,
         args,
     )
@@ -1572,7 +1853,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--relation1-mode",
-        choices=["burst", "product_prior_context", "none"],
+        choices=["burst", "product_prior_context", "filtered_campaign_pair", "none"],
         default="burst",
         help="Relation 1 construction mode.",
     )
@@ -1586,6 +1867,48 @@ def parse_args() -> argparse.Namespace:
         "--product-context-exclude-same-week",
         action="store_true",
         help="Exclude same product-week pairs from product_prior_context relation.",
+    )
+    parser.add_argument(
+        "--train-mask-path",
+        type=Path,
+        default=DEFAULT_TRAIN_MASK_PATH,
+        help=(
+            "Optional train mask used to set train-only quantile thresholds for filtered campaign-pair edges. "
+            "If the path does not exist, all nodes are used as a fallback."
+        ),
+    )
+    parser.add_argument(
+        "--campaign-filter-comp-quantile",
+        type=float,
+        default=0.60,
+        help="Train-quantile cutoff for the product-week-direction campaign component score.",
+    )
+    parser.add_argument(
+        "--campaign-filter-topk",
+        type=int,
+        default=3,
+        help="Maximum filtered campaign-pair outgoing neighbors per source review before global edge budgeting.",
+    )
+    parser.add_argument(
+        "--campaign-filter-budget-directed",
+        type=int,
+        default=6000,
+        help="Maximum number of directed filtered_campaign_pair edges to keep.",
+    )
+    parser.add_argument(
+        "--campaign-filter-min-pair-score",
+        type=float,
+        default=0.20,
+        help="Minimum pair score for filtered campaign-pair candidate edges.",
+    )
+    parser.add_argument(
+        "--campaign-filter-min-group-size",
+        type=int,
+        default=3,
+        help=(
+            "Minimum product-week-rating-direction group size required for filtered campaign-pair edges. "
+            "Larger values keep only stronger structural campaign evidence."
+        ),
     )
     parser.add_argument(
         "--custom2-edge-mode",
@@ -1740,6 +2063,11 @@ def parse_args() -> argparse.Namespace:
         choices=["recent", "segmented"],
         default="recent",
         help="For baseline_context shock edges, choose recent prior product reviews or old/mid/recent segmented prior reviews.",
+    )
+    parser.add_argument(
+        "--save-edges-parquet",
+        action="store_true",
+        help="Also save edges.parquet. Default skips parquet to avoid optional dependency overhead.",
     )
     return parser.parse_args()
 

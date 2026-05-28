@@ -1,0 +1,2 @@
+experiment,status,graph_path,best_epoch,best_threshold,valid_pr_auc,valid_macro_f1,test_pr_auc,test_roc_auc,test_macro_f1,test_precision,test_recall,test_accuracy,note
+campaign_quality_q60_relation_sage_mlp_equal_seed42,dry_run,data/graph_campaign_quality_q60_top3_b6000_s020/graph_rur_custom2.pt,60,0.794,0.4441336701873743,0.6600831978094555,0.5288475351597811,0.8051183537691758,0.6962006747836291,0.5273052820053715,0.5148601398601399,0.7972289833364539,active validation-best q60 campaign-quality relation-aware Self Branch SAGE model

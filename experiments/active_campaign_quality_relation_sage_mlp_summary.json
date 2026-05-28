@@ -1,0 +1,18 @@
+[
+  {
+    "experiment": "campaign_quality_q60_relation_sage_mlp_equal_seed42",
+    "status": "dry_run",
+    "graph_path": "data/graph_campaign_quality_q60_top3_b6000_s020/graph_rur_custom2.pt",
+    "best_epoch": 60,
+    "best_threshold": 0.794,
+    "valid_pr_auc": 0.4441336701873743,
+    "valid_macro_f1": 0.6600831978094555,
+    "test_pr_auc": 0.5288475351597811,
+    "test_roc_auc": 0.8051183537691758,
+    "test_macro_f1": 0.6962006747836291,
+    "test_precision": 0.5273052820053715,
+    "test_recall": 0.5148601398601399,
+    "test_accuracy": 0.7972289833364539,
+    "note": "active validation-best q60 campaign-quality relation-aware Self Branch SAGE model"
+  }
+]

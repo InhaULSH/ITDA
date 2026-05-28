@@ -1,0 +1,5 @@
+policy_item,value,description
+validation_selected_threshold,0.78,Threshold selected during validation-side prevalence-constrained Macro F1 review.
+operating_threshold,0.794,Current fixed operating threshold for dashboard and prediction labels.
+threshold_change_rule,admin_approval_required,Streamlit should only simulate threshold changes until an admin records approval.
+test_split_policy,reporting_only,Test metrics may be shown in governance view but must not drive threshold selection.

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="6b46acdc-a860-4c71-bc5c-f8e088bc0781" name="변경" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/GNN_project_1.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BuildEdges.py" beforeDir="false" afterPath="$PROJECT_DIR$/BuildEdges.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BuildGraphDataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/BuildGraphDataset.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BuildPredictionExplanations.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/EDA_Report.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ITDA 학술제 가이드라인.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modeling_Report.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modeling_Second.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RunExperiments.py" beforeDir="false" afterPath="$PROJECT_DIR$/RunExperiments.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Run_Topk15_Window60_SAGE.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sampling_Report.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TrainGNN.py" beforeDir="false" afterPath="$PROJECT_DIR$/TrainGNN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_report_revised_ascii.docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_report_v2_ascii.docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/eda/figures/01_label_imbalance_pie.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/eda/figures/01_label_imbalance_pie.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/eda/figures/02_rating_distribution_bar.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/eda/figures/02_rating_distribution_bar.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/eda/figures/03_fake_rate_by_rating.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/eda/figures/03_fake_rate_by_rating.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/eda/figures/04_yearly_volume_fake_rate.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/eda/figures/04_yearly_volume_fake_rate.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/eda/figures/05_monthly_review_volume_histogram.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/eda/figures/05_monthly_review_volume_histogram.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/eda/figures/06_day_of_week_fake_rate.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/eda/figures/06_day_of_week_fake_rate.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/eda/figures/07_temporal_split_fake_rate.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/eda/figures/07_temporal_split_fake_rate.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/eda/figures/08_text_length_distribution_log.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/eda/figures/08_text_length_distribution_log.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/eda/figures/09_fake_rate_by_text_length_bin.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/eda/figures/09_fake_rate_by_text_length_bin.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/eda/figures/10_user_product_review_count_lognormal.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/eda/figures/10_user_product_review_count_lognormal.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/eda/figures/11_fake_rate_by_user_product_bins.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/eda/figures/11_fake_rate_by_user_product_bins.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/eda/figures/12_has_user_neighbor_30d_fake_rate.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/eda/figures/12_has_user_neighbor_30d_fake_rate.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/eda/figures/12_has_user_neighbor_7d_fake_rate.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/eda/figures/12_has_user_neighbor_7d_fake_rate.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/eda/figures/13_burst_bucket_fake_rate.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/eda/figures/13_burst_bucket_fake_rate.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/eda/figures/14_top_duplicate_text_frequencies.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/eda/figures/14_top_duplicate_text_frequencies.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/eda/figures/15_odds_ratio_risk_flags.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/eda/figures/15_odds_ratio_risk_flags.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/eda/figures/16_product_rating_structure_scatter.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/eda/figures/16_product_rating_structure_scatter.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/eda/figures/17_temporal_drift_text_length.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/eda/figures/17_temporal_drift_text_length.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/eda/figures/18_test_cold_start_fake_rate.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/eda/figures/18_test_cold_start_fake_rate.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/edges_relflag_edge_t15_w60_thr075/edge_index.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/edges_relflag_edge_t15_w60_thr075/edge_type.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/edges_relflag_edge_t15_w60_thr075/edges.csv.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/edges_relflag_edge_t15_w60_thr075/edges_summary.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/edges_relflag_edge_t15_w60_thr075/relation_edge_counts.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/graph_relflag_edge_t15_w60_eda_logic_directional/feature_scaler_params.npz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/graph_relflag_edge_t15_w60_eda_logic_directional/graph_rur_custom2.pt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/graph_relflag_edge_t15_w60_eda_logic_directional/graph_summary.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/graph_relflag_edge_t15_w60_thr075/feature_scaler_params.npz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/graph_relflag_edge_t15_w60_thr075/graph_rur_custom2.pt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/graph_relflag_edge_t15_w60_thr075/graph_summary.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/processed/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/processed/feature_columns.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/processed/node_features_numeric.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/processed/node_labels.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/processed/node_review_ids.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/processed/preprocess_summary.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/processed/relation_candidate_keys.csv.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/processed/review_nodes.csv.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/processed_rur_shock_context/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/sampled_relative_flags_q75_m2/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/active_sage_model_summary.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/active_sage_model_summary.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/relflag_edge_t15_w60_thr075_sage_inverse_seed42/best_model.pt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/relflag_edge_t15_w60_thr075_sage_inverse_seed42/config_used.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/relflag_edge_t15_w60_thr075_sage_inverse_seed42/metrics.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/relflag_edge_t15_w60_thr075_sage_inverse_seed42/prediction_test.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/relflag_edge_t15_w60_thr075_sage_inverse_seed42/predictions_all.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/relflag_edge_t15_w60_thr075_sage_inverse_seed42/training_log.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/relflag_t15_w60_eda_logic_directional_sage_inverse_seed42/best_model.pt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/relflag_t15_w60_eda_logic_directional_sage_inverse_seed42/config_used.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/relflag_t15_w60_eda_logic_directional_sage_inverse_seed42/metrics.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/relflag_t15_w60_eda_logic_directional_sage_inverse_seed42/prediction_explanation_summary.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/relflag_t15_w60_eda_logic_directional_sage_inverse_seed42/prediction_explanations.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/relflag_t15_w60_eda_logic_directional_sage_inverse_seed42/prediction_test.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/relflag_t15_w60_eda_logic_directional_sage_inverse_seed42/predictions_all.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/relflag_t15_w60_eda_logic_directional_sage_inverse_seed42/training_log.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/report_assets/product_week_rating_direction_fake_rate.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/report_assets/product_week_rating_direction_fake_rate.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/report_assets/product_week_review_count_fake_rate.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/report_assets/product_week_review_count_fake_rate.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/report_assets/product_week_review_count_fake_rate_1_4_bins.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/report_assets/product_week_review_count_fake_rate_1_4_bins.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/report_rendered_word/report_revised_ascii.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/report_rendered_word/report_v2_ascii.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/report_rendered_word_part3_6/part3_6_review.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/report_rendered_word_part3_6/part3_6_review_v2.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/~$서_파트3_4_5_6_퇴고본.docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/보고서_파트3_4_5_6_퇴고본.docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/이상호_보고서_수정본.docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/이상호_보고서_초안3.docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/이상호_보고서_퇴고본.docx" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="102" />
+    <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;InhaULSH&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/InhaULSH/ITDA.git&quot;,
+    &quot;accountId&quot;: &quot;adea9698-8ef1-4698-85ba-cf1a6bdf02cd&quot;
+  }
+}</component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="3E1S0xuwWwU79D0zmqGcQ4W8pfb" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="sortByType" value="true" />
+    <option name="sortKey" value="BY_TYPE" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "master",
+    "junie.onboarding.icon.badge.shown": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-PY-261.24374.152" />
+        <option value="bundled-python-sdk-c59985aa861c-c2ffad84badb-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-261.24374.152" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="디폴트 작업">
+      <changelist id="6b46acdc-a860-4c71-bc5c-f8e088bc0781" name="변경" comment="" />
+      <created>1779344364507</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1779344364507</updated>
+      <workItem from="1779344366878" duration="40000" />
+      <workItem from="1779776145803" duration="15000" />
+      <workItem from="1779945097028" duration="318000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
